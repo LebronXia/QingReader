@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="colorTheme">#ffce3d3d</color>
+    <color name="colorPageBg">#f2f4f5</color>
+    <color name="colorwhite">#ffffffff</color>
+
+    //Tab背景
+    <color name="colorTabBg">#ffffffff</color>
+    <color name="colorTabTextCheck">#ffce3d3a</color>
+    <color name="colorTabTextNormal">#585858</color>
+    <color name="colorTabLine">#ffce3d3a</color>
+
+    <!--tab标签栏文字的颜色-->
+    <color name="colorTabText">#585858</color>
+    <!--正文文字颜色-->
+    <color name="colorContent">#ff333333</color>
+    <!--首页item文字颜色-->
+    <color name="colorSubtitle">#999</color>
+    <!--选择分类按下颜色-->
+    <color name="colorChoosePress">#DDD</color>
+
+    <color name="colorTitle">#666</color>
+
+    <!--分割线-->
+    <color name="colorLine">#EBEBEB</color>
+
+
+    <color name="gank_zise">#9370DB</color>
+    <color name="gank_red">#e91e63</color>
+    <color name="gank_orenge">#ff5252</color>
+    <color name="gank_gray">#727272</color>
+    <color name="gank_green">#4caf50</color>
+    <color name="gank_yellow">#fbc02d</color>
+    <color name="gank_blue">#3F51B5</color>
+    <color name="gank_hese">#CCCC33</color>
+
+
+</resources>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/ll_one_photo"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:paddingLeft="10dp"
+              android:paddingRight="10dp"
+              android:paddingBottom="10dp"
+    >
+
+    <ImageView
+        android:id="@+id/iv_one_photo"
+        android:layout_width="match_parent"
+        android:layout_height="127dp"
+        android:background="@mipmap/ic_nav_bg_drawerlayout"
+        android:scaleType="fitXY"
+        />
+
+    <TextView
+        android:id="@+id/tv_one_photo_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Andorid插件话思想实现话原理"
+        android:layout_marginTop="2dp"
+        android:maxLines="2"
+        android:textColor="@color/colorContent"
+        android:textSize="12sp"
+        />
+
+</LinearLayout>

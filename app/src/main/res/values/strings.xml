@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">QingReader</string>
+    <string name="main_page">项目主页</string>
+    <string name="dayornight">日夜间模式</string>
+</resources>
