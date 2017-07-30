@@ -1,5 +1,8 @@
 package com.riane.qingreader.data;
 
+import com.riane.qingreader.data.local.DbHelper;
+import com.riane.qingreader.data.local.ReaderLocalDataRepository;
+import com.riane.qingreader.data.network.ApiHelper;
 import com.riane.qingreader.data.network.ReaderRemoteDataRepository;
 
 import javax.inject.Singleton;
@@ -21,8 +24,14 @@ public class RepositoryModule {
 
     @Singleton
     @Provides
-    ReaderDataSource providerReaderRemoteDataSource(){
+    ApiHelper providerReaderRemoteDataSource(){
         return new ReaderRemoteDataRepository();
+    }
+
+    @Singleton
+    @Provides
+    DbHelper providerReaderLocalDataSource(ReaderLocalDataRepository readerLocalDataRepository){
+        return readerLocalDataRepository;
     }
 
 

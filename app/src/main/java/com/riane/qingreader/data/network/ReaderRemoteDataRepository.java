@@ -30,7 +30,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by Riane on 2017/7/12.
  */
 
-public class ReaderRemoteDataRepository implements ReaderDataSource{
+public class ReaderRemoteDataRepository implements ApiHelper{
 
     public static Retrofit mGankRetrofit;
     public static Retrofit mDoubanRetrofit;
@@ -129,4 +129,5 @@ public class ReaderRemoteDataRepository implements ReaderDataSource{
     public Observable<GankIoDataBean> getGankIoData(String id, int page, int pre_page) {
         return mGankApiService.getGankIoData(id, page, pre_page);
     }
+
 }

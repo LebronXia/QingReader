@@ -2,6 +2,8 @@ package com.riane.qingreader.di.module;
 
 import android.content.Context;
 
+import com.riane.qingreader.Contants;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -22,4 +24,10 @@ public class ApplicationModule {
     Context provideContext(){
         return mContext;
     }
+
+    @Provides
+    String privideDbName(){
+        return Contants.DB_NAME;
+    }
+
 }

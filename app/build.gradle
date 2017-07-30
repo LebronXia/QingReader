@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'android-apt'
+apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion 25
@@ -21,6 +22,12 @@ android {
     }
     packagingOptions {
         exclude 'META-INF/rxjava.properties'
+    }
+
+    greendao {
+        schemaVersion 1
+        daoPackage 'com.riane.qingreader.data.local.gen'
+        targetGenDir 'src/main/java'
     }
 }
 
@@ -60,4 +67,6 @@ dependencies {
     compile 'com.cocosw:bottomsheet:1.+@aar'
     //角标库
     compile 'com.haozhang.libary:android-slanted-textview:1.2'
+    compile'org.greenrobot:greendao:3.0.1'
+    compile'org.greenrobot:greendao-generator:3.0.0'
 }

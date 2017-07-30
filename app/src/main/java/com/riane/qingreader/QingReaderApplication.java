@@ -2,9 +2,12 @@ package com.riane.qingreader;
 
 import android.app.Application;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.riane.qingreader.data.DaggerReaderRepositoryComponent;
 import com.riane.qingreader.data.ReaderRepositoryComponent;
+import com.riane.qingreader.data.local.gen.DaoMaster;
+import com.riane.qingreader.data.local.gen.DaoSession;
 import com.riane.qingreader.data.network.ReaderRemoteDataRepository;
 import com.riane.qingreader.di.module.ApplicationModule;
 
@@ -17,6 +20,7 @@ public class QingReaderApplication extends Application{
 
     private static Context mContext;
     private ReaderRepositoryComponent mReaderRepositoryComponent;
+    private DaoMaster.DevOpenHelper mHelper;
 
     @Override
     public void onCreate() {
