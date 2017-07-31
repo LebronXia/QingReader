@@ -29,7 +29,7 @@ public class ReaderRepository implements ReaderDataSource{
     @Inject
     public ReaderRepository(ApiHelper readerRemoteDataSource, DbHelper readerLocalDataSource){
         this.mReaderRemoteDataSource = readerRemoteDataSource;
-        mReaderLocalDataSource = readerLocalDataSource;
+        this.mReaderLocalDataSource = readerLocalDataSource;
     }
 
     @Override

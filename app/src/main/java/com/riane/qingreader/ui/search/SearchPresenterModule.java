@@ -12,6 +12,10 @@ public class SearchPresenterModule {
 
     private SearchContract.View mView;
 
+    public SearchPresenterModule(SearchContract.View view){
+        mView = view;
+    }
+
     @Provides
     SearchContract.View provideSearchContractView(){
         return mView;

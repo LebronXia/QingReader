@@ -12,6 +12,7 @@ import dagger.Component;
 @FragmentScoped
 @Component(dependencies = ReaderRepositoryComponent.class, modules = SearchPresenterModule.class)
 public interface SearchComponent {
+
     void inject(SearchActivity searchActivity);
 
 

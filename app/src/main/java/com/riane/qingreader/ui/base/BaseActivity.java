@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
 public abstract class BaseActivity extends AppCompatActivity{
 
     private Toolbar mToolbar;
-    private Context mContext;
+    public Context mContext;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
