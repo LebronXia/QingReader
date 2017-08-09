@@ -15,5 +15,7 @@ public interface SearchComponent {
 
     void inject(SearchActivity searchActivity);
 
+    void inject(SearchHotWordFragment searchHotWordFragment);
+
 
 }

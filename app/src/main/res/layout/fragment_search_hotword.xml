@@ -4,12 +4,66 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">\
 
-    <TextView
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="热词搜索 首页"
-        android:textSize="16sp"
-        />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="搜索范围"
+            android:drawableLeft="@drawable/rac"
+            android:textColor="@color/gank_blue"
+            android:gravity="center"
+            android:drawablePadding="10dp"
+            />
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/fbl_search_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </com.google.android.flexbox.FlexboxLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/rac"
+            android:textColor="@color/gank_blue"
+            android:text="搜索历史"
+            android:layout_gravity="center"
+            android:drawablePadding="10dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_search_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="清空"
+            android:layout_marginRight="10dp"
+            />
+
+    </LinearLayout>
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:id="@+id/fb_search_history"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </com.google.android.flexbox.FlexboxLayout>
 
 </LinearLayout>

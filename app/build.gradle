@@ -29,6 +29,17 @@ android {
         daoPackage 'com.riane.qingreader.data.local.gen'
         targetGenDir 'src/main/java'
     }
+
+    configurations.all {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            def requested = details.requested
+            if (requested.group == 'com.android.support') {
+                if (!requested.name.startsWith("multidex")) {
+                    details.useVersion '25.3.0'
+                }
+            }
+        }
+    }
 }
 
 dependencies {
@@ -69,4 +80,5 @@ dependencies {
     compile 'com.haozhang.libary:android-slanted-textview:1.2'
     compile'org.greenrobot:greendao:3.0.1'
     compile'org.greenrobot:greendao-generator:3.0.0'
+    compile 'com.google.android:flexbox:0.3.0-alpha3'
 }

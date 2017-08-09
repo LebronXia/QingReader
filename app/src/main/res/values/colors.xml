@@ -38,5 +38,8 @@
     <color name="gank_blue">#3F51B5</color>
     <color name="gank_hese">#CCCC33</color>
 
+    <color name="darkred">#8B0000</color> <!--暗红色 -->
+    <color name="textbg">#FFAF8F84</color>
+
 
 </resources>
