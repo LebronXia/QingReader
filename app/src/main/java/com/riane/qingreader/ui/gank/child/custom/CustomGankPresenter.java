@@ -2,7 +2,6 @@ package com.riane.qingreader.ui.gank.child.custom;
 
 import com.riane.qingreader.data.ReaderRepository;
 import com.riane.qingreader.data.network.reponse.GankIoDataBean;
-import com.riane.qingreader.ui.base.BaseContract;
 import com.riane.qingreader.ui.base.BasePresenter;
 
 import javax.inject.Inject;
@@ -28,14 +27,14 @@ public class CustomGankPresenter extends BasePresenter implements CustomGankCont
     }
     @Override
     public void getGankCustomData(String id, int page, int pre_page) {
-        mReaderRepository.getGankIoData(id, page, pre_page)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<GankIoDataBean>() {
-                    @Override
-                    public void accept(GankIoDataBean gankIoDataBean) throws Exception {
-                        mView.showGankCustomData(gankIoDataBean);
-                    }
-                });
+       addSubscrebe( mReaderRepository.getGankIoData(id, page, pre_page)
+               .subscribeOn(Schedulers.io())
+               .observeOn(AndroidSchedulers.mainThread())
+               .subscribe(new Consumer<GankIoDataBean>() {
+                   @Override
+                   public void accept(GankIoDataBean gankIoDataBean) throws Exception {
+                       mView.showGankCustomData(gankIoDataBean);
+                   }
+               }));
     }
 }

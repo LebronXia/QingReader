@@ -7,25 +7,28 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.riane.qingreader.QingReaderApplication;
 import com.riane.qingreader.R;
 import com.riane.qingreader.ui.base.BaseActivity;
-import com.riane.qingreader.ui.gank.child.custom.CustomGankPresenterModule;
-import com.riane.qingreader.ui.gank.child.custom.DaggerCustomGankComponent;
+import com.riane.qingreader.util.RxBus;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import io.reactivex.Flowable;
+import io.reactivex.functions.Consumer;
 
 /**
  * Created by Riane on 2017/7/25.
  */
 
-public class SearchActivity extends BaseActivity implements SearchView.OnQueryTextListener, SearchContract.View{
+public class SearchActivity extends BaseActivity implements SearchView.OnQueryTextListener, View.OnTouchListener, SearchContract.View{
     @BindView(R.id.toolbar_search)
     Toolbar mToolbar;
     private SearchView mSearchView;
@@ -66,7 +69,13 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
 
     @Override
     protected void initData() {
-
+        Flowable<String> f = RxBus.getInstance().register(String.class);
+        f.subscribe(new Consumer<String>() {
+            @Override
+            public void accept(String s) throws Exception {
+                mSearchView.setQuery(s, true);
+            }
+        });
     }
 
     @Override
@@ -118,7 +127,12 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
         //清除searchVIew焦点 并存入数据库
         mSearchView.clearFocus();
         mSearchPresenter.insertHistory(mSearchView.getQuery().toString());
+    }
 
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        hideInputManager();
+        return false;
     }
 
     @Override
@@ -129,5 +143,11 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
     @Override
     public void showError() {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RxBus.getInstance().unregisterAll();
     }
 }

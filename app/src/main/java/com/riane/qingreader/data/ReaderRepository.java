@@ -1,13 +1,9 @@
 package com.riane.qingreader.data;
 
-import android.widget.RemoteViews;
-
 import com.riane.qingreader.data.local.DbHelper;
 import com.riane.qingreader.data.network.ApiHelper;
 import com.riane.qingreader.data.network.reponse.GankIoDataBean;
 import com.riane.qingreader.data.network.reponse.GankIoDayBean;
-
-import org.xml.sax.helpers.XMLReaderAdapter;
 
 import java.util.List;
 
@@ -49,11 +45,11 @@ public class ReaderRepository implements ReaderDataSource{
 
     @Override
     public Observable<List<String>> querySearchHistory() {
-        return null;
+        return mReaderLocalDataSource.querySearchHistory();
     }
 
     @Override
     public void deleteSearchHistory() {
-
+        mReaderLocalDataSource.deleteSearchHistory();
     }
 }

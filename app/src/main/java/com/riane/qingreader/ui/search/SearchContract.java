@@ -21,5 +21,8 @@ public interface SearchContract {
         void loadSearchHistory();
         //删除全部
         void deleteAll();
+
+        //搜索SearchView结果
+        void loadData(String content, String type, String page);
     }
 }
