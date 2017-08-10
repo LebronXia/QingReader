@@ -10,6 +10,7 @@ public class Contants {
 
     public static final String KEY_MODE_NIGHT = "mode-night";
     public static final String KEY_GANK_SELECT = "gank_cala";
+    public static final int PAGECOUNT = 10;
 
     public static String DB_NAME = "QingReader.db";
 }
