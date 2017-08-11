@@ -2,6 +2,7 @@ package com.riane.qingreader.data.network;
 
 import com.riane.qingreader.data.network.reponse.GankIoDataBean;
 import com.riane.qingreader.data.network.reponse.GankIoDayBean;
+import com.riane.qingreader.data.network.reponse.ThemeResponse;
 
 import io.reactivex.Observable;
 
@@ -16,4 +17,7 @@ public interface ApiHelper {
 
     //获取某种类型数据
     Observable<GankIoDataBean> getGankIoData(String id, int page, int pre_page);
+
+    //获取搜索后的结果
+    Observable<ThemeResponse> getSearchContent(String content, String type, int page);
 }

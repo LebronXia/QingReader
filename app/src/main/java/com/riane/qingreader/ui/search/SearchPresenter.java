@@ -1,6 +1,7 @@
 package com.riane.qingreader.ui.search;
 
 import com.riane.qingreader.data.ReaderRepository;
+import com.riane.qingreader.data.network.reponse.ThemeResponse;
 import com.riane.qingreader.ui.base.BasePresenter;
 
 import java.util.List;
@@ -50,8 +51,23 @@ public class SearchPresenter extends BasePresenter implements SearchContract.Pre
         mReaderRepository.deleteSearchHistory();
     }
 
-    @Override
-    public void loadData(String content, String type, String page) {
 
+    @Override
+    public void loadData(String content, String type, int page) {
+        addSubscrebe(mReaderRepository.getSearchContent(content, type, page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ThemeResponse>() {
+                    @Override
+                    public void accept(ThemeResponse themeResponse) throws Exception {
+                        mView.showSearchList(themeResponse.getResults());
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        mView.showError();
+                    }
+                })
+        );
     }
 }

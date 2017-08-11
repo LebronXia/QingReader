@@ -3,16 +3,14 @@ package com.riane.qingreader.data.network;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.riane.qingreader.BuildConfig;
 import com.riane.qingreader.QingReaderApplication;
-import com.riane.qingreader.data.ReaderDataSource;
 import com.riane.qingreader.data.network.reponse.GankIoDataBean;
 import com.riane.qingreader.data.network.reponse.GankIoDayBean;
+import com.riane.qingreader.data.network.reponse.ThemeResponse;
 import com.riane.qingreader.util.NetUtil;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-
-import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import okhttp3.Cache;
@@ -130,4 +128,8 @@ public class ReaderRemoteDataRepository implements ApiHelper{
         return mGankApiService.getGankIoData(id, page, pre_page);
     }
 
+    @Override
+    public Observable<ThemeResponse> getSearchContent(String content, String type, int page) {
+        return mGankApiService.getSearchContent(content, type, page);
+    }
 }

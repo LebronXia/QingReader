@@ -1,5 +1,6 @@
 package com.riane.qingreader.ui.search;
 
+import com.riane.qingreader.data.network.reponse.Result;
 import com.riane.qingreader.ui.base.BaseContract;
 
 import java.util.List;
@@ -12,6 +13,8 @@ public interface SearchContract {
 
     interface View extends BaseContract.BaseView{
         void showHistory(List<String> results);
+
+        void showSearchList(List<Result> results);
     }
 
     interface Presenter extends BaseContract.BasePresenter{
@@ -23,6 +26,6 @@ public interface SearchContract {
         void deleteAll();
 
         //搜索SearchView结果
-        void loadData(String content, String type, String page);
+        void loadData(String content, String type, int page);
     }
 }

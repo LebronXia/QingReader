@@ -1,10 +1,13 @@
 package com.riane.qingreader.ui.search;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -13,7 +16,9 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.riane.qingreader.QingReaderApplication;
 import com.riane.qingreader.R;
+import com.riane.qingreader.data.network.reponse.Result;
 import com.riane.qingreader.ui.base.BaseActivity;
+import com.riane.qingreader.ui.base.BaseEnum;
 import com.riane.qingreader.util.RxBus;
 
 import java.util.List;
@@ -34,6 +39,10 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
     private SearchView mSearchView;
     private InputMethodManager mImm;
     private String queryString;
+    private String selectedType;
+
+    private SearchResultFragment resultFragment;
+    private SearchHotWordFragment hotWordFragment;
 
     @Inject
     SearchPresenter mSearchPresenter;
@@ -60,7 +69,7 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        SearchHotWordFragment hotWordFragment = new SearchHotWordFragment();
+        hotWordFragment = new SearchHotWordFragment();
         fragmentTransaction.replace(R.id.search_frame, hotWordFragment);
         fragmentTransaction.commit();
 
@@ -73,9 +82,12 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
         f.subscribe(new Consumer<String>() {
             @Override
             public void accept(String s) throws Exception {
-                mSearchView.setQuery(s, true);
+              //  mSearchView.setQuery(s, true);
+                selectedType = s;
             }
         });
+
+
     }
 
     @Override
@@ -109,7 +121,16 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
     @Override
     public boolean onQueryTextSubmit(String s) {
         hideInputManager();
-
+        if (!TextUtils.isEmpty(s)){
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            Bundle bundle = new Bundle();
+            bundle.putString("content", s);
+            bundle.putString("type", selectedType == null ? BaseEnum.all.getValue() : selectedType);
+            SearchResultFragment searchResultFragment = SearchResultFragment.newInstance(bundle);
+            fragmentTransaction.replace(R.id.search_frame, searchResultFragment).commitAllowingStateLoss();
+        } else {
+            Snackbar.make(mSearchView, "请输入搜索内容", Snackbar.LENGTH_SHORT).show();
+        }
         //切换到搜索结果页
         return true;
     }
@@ -137,6 +158,11 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
 
     @Override
     public void showHistory(List<String> results) {
+
+    }
+
+    @Override
+    public void showSearchList(List<Result> results) {
 
     }
 

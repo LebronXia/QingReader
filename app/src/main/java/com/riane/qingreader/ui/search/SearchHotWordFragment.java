@@ -9,6 +9,7 @@ import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayout;
 import com.riane.qingreader.QingReaderApplication;
 import com.riane.qingreader.R;
+import com.riane.qingreader.data.network.reponse.Result;
 import com.riane.qingreader.ui.base.BaseEnum;
 import com.riane.qingreader.ui.base.BaseFragment;
 import com.riane.qingreader.util.DensityUtil;
@@ -124,5 +125,10 @@ public class SearchHotWordFragment extends BaseFragment implements SearchContrac
                     }
                 });
             }
+    }
+
+    @Override
+    public void showSearchList(List<Result> results) {
+
     }
 }

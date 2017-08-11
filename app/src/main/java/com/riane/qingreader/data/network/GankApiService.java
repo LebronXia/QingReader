@@ -1,10 +1,9 @@
 package com.riane.qingreader.data.network;
 
-import android.provider.SyncStateContract;
-
 import com.riane.qingreader.Contants;
 import com.riane.qingreader.data.network.reponse.GankIoDataBean;
 import com.riane.qingreader.data.network.reponse.GankIoDayBean;
+import com.riane.qingreader.data.network.reponse.ThemeResponse;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -35,6 +34,7 @@ public interface GankApiService {
     @GET("day/{year}/{month}/{day}")
     Observable<GankIoDayBean> getGankIoDay(@Path("year") int year, @Path("month") int month, @Path("day") int day);
 
-//    @GET("search/query/{content}/category/{type}/count/" + Contants.PAGECOUNT + "/page/{page}")
-//    Observable<>
+    //获取搜索后的结果
+    @GET("search/query/{content}/category/{type}/count/" + Contants.PAGECOUNT + "/page/{page}")
+    Observable<ThemeResponse> getSearchContent(@Path("content")String Content, @Path("type")String type, @Path("page") int page);
 }

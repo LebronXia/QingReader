@@ -4,6 +4,7 @@ import com.riane.qingreader.data.local.DbHelper;
 import com.riane.qingreader.data.network.ApiHelper;
 import com.riane.qingreader.data.network.reponse.GankIoDataBean;
 import com.riane.qingreader.data.network.reponse.GankIoDayBean;
+import com.riane.qingreader.data.network.reponse.ThemeResponse;
 
 import java.util.List;
 
@@ -51,5 +52,10 @@ public class ReaderRepository implements ReaderDataSource{
     @Override
     public void deleteSearchHistory() {
         mReaderLocalDataSource.deleteSearchHistory();
+    }
+
+    @Override
+    public Observable<ThemeResponse> getSearchContent(String content, String type, int page) {
+        return mReaderRemoteDataSource.getSearchContent(content, type, page);
     }
 }
