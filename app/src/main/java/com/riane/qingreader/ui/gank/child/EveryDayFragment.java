@@ -40,6 +40,8 @@ public class EveryDayFragment extends BaseFragment implements EveryDayGankContra
     private View mHeaderView;
     private View mFootView;
     private Date mDate;
+    //没有数据的时候，往前倒退
+    private Date mLastDate;
     private int mYear;
     private int mMonth;
     private int mDay;
@@ -119,9 +121,10 @@ public class EveryDayFragment extends BaseFragment implements EveryDayGankContra
      * 没有请求导数据，则请求前一天数据
      */
     private void requestBeforeData(){
-        Date mLastDate = new Date(mDate.getTime() - DAY_OF_MILLISECOND);
+      //  mDate = new Date();
+        mDate.setTime(mDate.getTime() - DAY_OF_MILLISECOND);
         Calendar c = Calendar.getInstance();
-        c.setTime(mLastDate);
+        c.setTime(mDate);
         mYear = c.get(Calendar.YEAR);
         mMonth = c.get(Calendar.MONTH) + 1;
         mDay = c.get(Calendar.DAY_OF_MONTH);

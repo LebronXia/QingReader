@@ -17,6 +17,8 @@ import android.view.inputmethod.InputMethodManager;
 import com.riane.qingreader.QingReaderApplication;
 import com.riane.qingreader.R;
 import com.riane.qingreader.data.network.reponse.Result;
+import com.riane.qingreader.ui.event.SelectContentEvent;
+import com.riane.qingreader.ui.event.SelectTypeEvent;
 import com.riane.qingreader.ui.base.BaseActivity;
 import com.riane.qingreader.ui.base.BaseEnum;
 import com.riane.qingreader.util.RxBus;
@@ -78,12 +80,23 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
 
     @Override
     protected void initData() {
-        Flowable<String> f = RxBus.getInstance().register(String.class);
-        f.subscribe(new Consumer<String>() {
+        Flowable<SelectTypeEvent> f1 = RxBus.getInstance().register(SelectTypeEvent.class);
+        f1.subscribe(new Consumer<SelectTypeEvent>() {
             @Override
-            public void accept(String s) throws Exception {
+            public void accept(SelectTypeEvent s) throws Exception {
               //  mSearchView.setQuery(s, true);
-                selectedType = s;
+                selectedType = s.getSelectedType();
+            }
+        });
+
+        Flowable<SelectContentEvent> f2 = RxBus.getInstance().register(SelectContentEvent.class);
+        f2.subscribe(new Consumer<SelectContentEvent>() {
+            @Override
+            public void accept(SelectContentEvent s) throws Exception {
+                //  mSearchView.setQuery(s, true);
+                mSearchView.setQuery(s.getSelectContent(), true);
+                //selectedType = s.getSelectContent();
+                searchContent(s.getSelectContent());
             }
         });
 
@@ -120,6 +133,19 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
 
     @Override
     public boolean onQueryTextSubmit(String s) {
+
+        searchContent(s);
+        //切换到搜索结果页
+        return true;
+    }
+
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+        return true;
+    }
+
+    private void searchContent(String s){
         hideInputManager();
         if (!TextUtils.isEmpty(s)){
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -131,13 +157,6 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
         } else {
             Snackbar.make(mSearchView, "请输入搜索内容", Snackbar.LENGTH_SHORT).show();
         }
-        //切换到搜索结果页
-        return true;
-    }
-
-    @Override
-    public boolean onQueryTextChange(String s) {
-        return true;
     }
 
     public void hideInputManager(){

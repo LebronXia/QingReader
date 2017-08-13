@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.riane.qingreader.R;
 import com.riane.qingreader.data.network.reponse.Result;
+import com.riane.qingreader.util.TimeUtil;
 
 import java.util.List;
 
@@ -36,6 +37,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
 
     @Override
     public void onBindViewHolder(SearchViewHolder holder, int position) {
+        Result result = results.get(position);
+        holder.mTvSearchTitle.setText(result.getDesc());
+        holder.mTvSearchAutInfo.setText(result.getType() + " . " + result.getWho() + " . " +
+                TimeUtil.getTranslateTime(result.getPublishedAt()));
 
     }
 
@@ -55,6 +60,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    public void addAll(List<Result> resultlist){
+        results.addAll(resultlist);
+        notifyDataSetChanged();
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener){

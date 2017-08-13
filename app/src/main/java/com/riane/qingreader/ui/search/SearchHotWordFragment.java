@@ -10,6 +10,8 @@ import com.google.android.flexbox.FlexboxLayout;
 import com.riane.qingreader.QingReaderApplication;
 import com.riane.qingreader.R;
 import com.riane.qingreader.data.network.reponse.Result;
+import com.riane.qingreader.ui.event.SelectContentEvent;
+import com.riane.qingreader.ui.event.SelectTypeEvent;
 import com.riane.qingreader.ui.base.BaseEnum;
 import com.riane.qingreader.ui.base.BaseFragment;
 import com.riane.qingreader.util.DensityUtil;
@@ -73,7 +75,9 @@ public class SearchHotWordFragment extends BaseFragment implements SearchContrac
                     for (int i = 0; i < mFblSearchType.getChildCount(); i++){
                         mFblSearchType.getChildAt(i).setSelected(false);
                     }
-                    RxBus.getInstance().post(tv_bg.getText().toString());
+                    SelectTypeEvent selectTypeEvent = new SelectTypeEvent();
+                    selectTypeEvent.setSelectedType(tv_bg.getText().toString());
+                    RxBus.getInstance().post(selectTypeEvent);
                     tv_bg.setSelected(true);
                 }
             });
@@ -112,7 +116,7 @@ public class SearchHotWordFragment extends BaseFragment implements SearchContrac
             mFblSearchHistory.setFlexWrap(FlexWrap.WRAP);
             mFblSearchHistory.removeAllViews();
             for (String content : results){
-                TextView tv_history = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.view_search_type, mFblSearchHistory, false);
+                final TextView tv_history = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.view_search_type, mFblSearchHistory, false);
                 mFblSearchHistory.addView(tv_history);
                 tv_history.setText(content);
                 FlexboxLayout.LayoutParams layoutParams = (FlexboxLayout.LayoutParams) tv_history.getLayoutParams();
@@ -121,7 +125,11 @@ public class SearchHotWordFragment extends BaseFragment implements SearchContrac
                 tv_history.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        //searchPresenter.loadData(tv_history.getText().toString(), );
                        // listener.onSearch(tv_his.getText().toString());
+                        SelectContentEvent selectContentEvent = new SelectContentEvent();
+                        selectContentEvent.setSelectContent(tv_history.getText().toString());
+                        RxBus.getInstance().post(selectContentEvent);
                     }
                 });
             }
