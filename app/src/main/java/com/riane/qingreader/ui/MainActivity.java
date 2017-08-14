@@ -72,7 +72,6 @@ public class MainActivity extends BaseActivity{
 
     @OnClick({R.id.Fl_title_menu, R.id.iv_main_disco, R.id.iv_main_music, R.id.iv_main_friends})
     public void OnClick(View view){
-        Logger.d("hello+++++");
         switch (view.getId()){
             case R.id.Fl_title_menu:
                 Logger.d("你好！！！");

@@ -1,15 +1,21 @@
 package com.riane.qingreader.ui.gank.child;
 
+import android.support.v7.widget.StaggeredGridLayoutManager;
+
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.riane.qingreader.Contants;
 import com.riane.qingreader.QingReaderApplication;
 import com.riane.qingreader.R;
 import com.riane.qingreader.data.network.reponse.GankIoDataBean;
+import com.riane.qingreader.ui.adapter.WelfareAdapter;
 import com.riane.qingreader.ui.base.BaseFragment;
 import com.riane.qingreader.ui.gank.child.custom.CustomGankContract;
 import com.riane.qingreader.ui.gank.child.custom.CustomGankPresenter;
 import com.riane.qingreader.ui.gank.child.custom.CustomGankPresenterModule;
 import com.riane.qingreader.ui.gank.child.custom.DaggerCustomGankComponent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -23,6 +29,10 @@ public class WelfareFragment extends BaseFragment implements CustomGankContract.
 
     @BindView(R.id.rv_gank_welfare)
     XRecyclerView mRvGankWelfare;
+    private WelfareAdapter mWelfareAdapter;
+    private List<GankIoDataBean.ResultBean> resultBeanList = new ArrayList<>();
+    private int mPage = 1;
+    private boolean isRefresh;
 
     @Inject
     CustomGankPresenter mCustomGankPresenter;
@@ -45,6 +55,23 @@ public class WelfareFragment extends BaseFragment implements CustomGankContract.
 
     @Override
     protected void initView() {
+        mWelfareAdapter = new WelfareAdapter(getActivity(), resultBeanList);
+        mRvGankWelfare.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        mRvGankWelfare.setAdapter(mWelfareAdapter);
+        mRvGankWelfare.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+                mPage = 1;
+                isRefresh = true;
+                loadWelfareData();
+            }
+
+            @Override
+            public void onLoadMore() {
+                mPage ++;
+                loadWelfareData();
+            }
+        });
 
     }
 
@@ -67,11 +94,22 @@ public class WelfareFragment extends BaseFragment implements CustomGankContract.
     }
 
     private void loadWelfareData() {
-        mCustomGankPresenter.getGankCustomData("福利" , 1, Contants.per_page);
+        mCustomGankPresenter.getGankCustomData("福利" , mPage, Contants.per_page);
     }
 
     @Override
     public void showGankCustomData(GankIoDataBean gankIoDataBean) {
+        if (isRefresh){
+            mWelfareAdapter.clear();
+            isRefresh = false;
+        } else {
+            if (gankIoDataBean != null && gankIoDataBean.getResults() != null && gankIoDataBean.getResults().size() > 0){
+                mRvGankWelfare.refreshComplete();
+                mWelfareAdapter.addAll(gankIoDataBean.getResults());
+            } else {
+                mRvGankWelfare.setNoMore(true);
+            }
+        }
 
     }
 
