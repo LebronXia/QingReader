@@ -80,6 +80,10 @@ public class MainActivity extends BaseActivity{
             case R.id.iv_main_disco:
                 Logger.d("点击了音乐");
                 break;
+            case R.id.iv_main_music:
+                break;
+            case R.id.iv_main_friends:
+                break;
         }
 
     }

@@ -55,7 +55,7 @@ public class WelfareFragment extends BaseFragment implements CustomGankContract.
 
     @Override
     protected void initView() {
-        mWelfareAdapter = new WelfareAdapter(getActivity(), resultBeanList);
+        mWelfareAdapter = new WelfareAdapter(getActivity(), R.layout.item_welfare, resultBeanList);
         mRvGankWelfare.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         mRvGankWelfare.setAdapter(mWelfareAdapter);
         mRvGankWelfare.setLoadingListener(new XRecyclerView.LoadingListener() {
@@ -100,12 +100,17 @@ public class WelfareFragment extends BaseFragment implements CustomGankContract.
     @Override
     public void showGankCustomData(GankIoDataBean gankIoDataBean) {
         if (isRefresh){
-            mWelfareAdapter.clear();
+            //mWelfareAdapter.clear();
+            mRvGankWelfare.refreshComplete();
+            resultBeanList.clear();
+            resultBeanList.addAll(gankIoDataBean.getResults());
+            mWelfareAdapter.notifyDataSetChanged();
             isRefresh = false;
         } else {
             if (gankIoDataBean != null && gankIoDataBean.getResults() != null && gankIoDataBean.getResults().size() > 0){
                 mRvGankWelfare.refreshComplete();
-                mWelfareAdapter.addAll(gankIoDataBean.getResults());
+                resultBeanList.addAll(gankIoDataBean.getResults());
+                mWelfareAdapter.notifyDataSetChanged();
             } else {
                 mRvGankWelfare.setNoMore(true);
             }
