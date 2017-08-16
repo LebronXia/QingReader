@@ -9,7 +9,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.orhanobut.logger.Logger;
@@ -18,7 +17,7 @@ import com.riane.qingreader.ui.adapter.MyFragmentPagerAdapter;
 import com.riane.qingreader.ui.base.BaseActivity;
 import com.riane.qingreader.ui.book.BookFragment;
 import com.riane.qingreader.ui.gank.GankFragment;
-import com.riane.qingreader.ui.movie.MovieListFragment;
+import com.riane.qingreader.ui.movie.MovieFragment;
 import com.riane.qingreader.ui.search.SearchActivity;
 
 import java.util.ArrayList;
@@ -35,6 +34,10 @@ public class MainActivity extends BaseActivity{
     NavigationView mNavigationView;
     @BindView(R.id.iv_main_disco)
     ImageView mIvMainDisco;
+    @BindView(R.id.iv_main_music)
+    ImageView mIvMainMusic;
+    @BindView(R.id.iv_main_friends)
+    ImageView mIvMainFriends;
 
     @Override
     protected int getLayoutId() {
@@ -55,8 +58,8 @@ public class MainActivity extends BaseActivity{
     private void initContentFragment() {
         ArrayList<Fragment> mFragments = new ArrayList<>();
         mFragments.add(new GankFragment());
-        mFragments.add(new MovieListFragment());
         mFragments.add(new BookFragment());
+        mFragments.add(new MovieFragment());
 
         MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), mFragments);
         mVpMainContent.setAdapter(adapter);
@@ -78,11 +81,22 @@ public class MainActivity extends BaseActivity{
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 break;
             case R.id.iv_main_disco:
-                Logger.d("点击了音乐");
+               mIvMainDisco.setSelected(true);
+                mIvMainMusic.setSelected(false);
+                mIvMainFriends.setSelected(false);
+                mVpMainContent.setCurrentItem(0);
                 break;
             case R.id.iv_main_music:
+                mIvMainDisco.setSelected(false);
+                mIvMainMusic.setSelected(true);
+                mIvMainFriends.setSelected(false);
+                mVpMainContent.setCurrentItem(1);
                 break;
             case R.id.iv_main_friends:
+                mIvMainDisco.setSelected(false);
+                mIvMainMusic.setSelected(false);
+                mIvMainFriends.setSelected(true);
+                mVpMainContent.setCurrentItem(2);
                 break;
         }
 

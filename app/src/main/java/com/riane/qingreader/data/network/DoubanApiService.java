@@ -2,8 +2,8 @@ package com.riane.qingreader.data.network;
 
 import com.riane.qingreader.data.network.reponse.HotMovieBean;
 
+import io.reactivex.Observable;
 import retrofit2.http.GET;
-import rx.Observable;
 
 /**
  * Created by Riane on 2017/7/10.

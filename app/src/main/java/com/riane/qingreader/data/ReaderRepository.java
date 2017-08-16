@@ -4,6 +4,7 @@ import com.riane.qingreader.data.local.DbHelper;
 import com.riane.qingreader.data.network.ApiHelper;
 import com.riane.qingreader.data.network.reponse.GankIoDataBean;
 import com.riane.qingreader.data.network.reponse.GankIoDayBean;
+import com.riane.qingreader.data.network.reponse.HotMovieBean;
 import com.riane.qingreader.data.network.reponse.ThemeResponse;
 
 import java.util.List;
@@ -57,5 +58,15 @@ public class ReaderRepository implements ReaderDataSource{
     @Override
     public Observable<ThemeResponse> getSearchContent(String content, String type, int page) {
         return mReaderRemoteDataSource.getSearchContent(content, type, page);
+    }
+
+    @Override
+    public Observable<HotMovieBean> getLiveFilm() {
+        return mReaderRemoteDataSource.getLiveFilm();
+    }
+
+    @Override
+    public Observable<HotMovieBean> getTop250() {
+        return mReaderRemoteDataSource.getTop250();
     }
 }
