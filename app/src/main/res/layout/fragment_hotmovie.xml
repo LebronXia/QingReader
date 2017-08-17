@@ -3,12 +3,11 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:id="@+id/xrv_hotmovie"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="热映榜"
-        android:gravity="center"
-        android:textSize="18sp"
-        />
+        android:layout_height="match_parent"
+        >
+    </com.jcodecraeer.xrecyclerview.XRecyclerView>
 
 </LinearLayout>

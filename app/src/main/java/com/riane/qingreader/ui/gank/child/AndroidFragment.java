@@ -49,11 +49,6 @@ public class AndroidFragment extends BaseFragment implements CustomGankContract.
 
     @Override
     protected void initView() {
-
-    }
-
-    @Override
-    protected void initDatas() {
         mAndoridAdapter = new AndoridAdapter();
         mAndroidXRecycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAndroidXRecycleView.setAdapter(mAndoridAdapter);
@@ -70,6 +65,11 @@ public class AndroidFragment extends BaseFragment implements CustomGankContract.
                 loadAndroidData();
             }
         });
+    }
+
+    @Override
+    protected void initDatas() {
+
     }
 
     @Override

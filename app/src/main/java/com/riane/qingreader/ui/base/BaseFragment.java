@@ -84,13 +84,16 @@ public abstract class BaseFragment extends Fragment{
     }
 
     /**
-     * 显示的时候加载数据
+     * 显示时加载数据,需要这样的使用
+     * 注意声明 isPrepared，先初始化
+     * 生命周期会先执行 setUserVisibleHint 再执行onActivityCreated
+     * 在 onActivityCreated 之后第一次显示加载数据，只加载一次
      */
-    protected abstract void loadData();
+    protected void loadData(){};
 
 
     /**
      * 加载事变后点击后的操作
      */
-    protected abstract void onRefresh();
+    protected void onRefresh(){};
 }

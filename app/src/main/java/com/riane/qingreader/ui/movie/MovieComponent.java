@@ -2,6 +2,7 @@ package com.riane.qingreader.ui.movie;
 
 import com.riane.qingreader.data.ReaderRepositoryComponent;
 import com.riane.qingreader.di.scope.FragmentScoped;
+import com.riane.qingreader.ui.movie.HotMovie.HotMovieFragment;
 
 import dagger.Component;
 
@@ -14,4 +15,6 @@ import dagger.Component;
 public interface MovieComponent {
 
     void inject(MovieFragment movieFragment);
+
+    void inject(HotMovieFragment hotMovieFragment);
 }

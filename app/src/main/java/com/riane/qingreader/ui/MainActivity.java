@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class MainActivity extends BaseActivity{
+public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener{
     @BindView(R.id.vp_mian_content)
     ViewPager mVpMainContent;
     @BindView(R.id.drawer_layout)
@@ -63,6 +63,7 @@ public class MainActivity extends BaseActivity{
 
         MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), mFragments);
         mVpMainContent.setAdapter(adapter);
+        mVpMainContent.addOnPageChangeListener(this);
         mVpMainContent.setOffscreenPageLimit(2);
         mIvMainDisco.setSelected(true);
         mVpMainContent.setCurrentItem(0);
@@ -118,5 +119,36 @@ public class MainActivity extends BaseActivity{
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        switch (position){
+            case 0:
+                mIvMainDisco.setSelected(true);
+                mIvMainMusic.setSelected(false);
+                mIvMainFriends.setSelected(false);
+                break;
+            case 1:
+                mIvMainDisco.setSelected(false);
+                mIvMainMusic.setSelected(true);
+                mIvMainFriends.setSelected(false);
+                break;
+            case 2:
+                mIvMainDisco.setSelected(false);
+                mIvMainMusic.setSelected(false);
+                mIvMainFriends.setSelected(true);
+                break;
+        }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }

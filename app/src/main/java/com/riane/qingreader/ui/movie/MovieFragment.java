@@ -46,6 +46,8 @@ public class MovieFragment extends BaseFragment{
         mVpMovieList.setAdapter(myAdapter);
 
         mVpMovieList.setOffscreenPageLimit(2);
+        mVpMovieList.setCurrentItem(0);
+        myAdapter.notifyDataSetChanged();
         mTlMovieList.setTabMode(TabLayout.MODE_FIXED);
         mTlMovieList.setupWithViewPager(mVpMovieList);
     }
@@ -60,16 +62,6 @@ public class MovieFragment extends BaseFragment{
 
     @Override
     protected void initDatas() {
-
-    }
-
-    @Override
-    protected void loadData() {
-
-    }
-
-    @Override
-    protected void onRefresh() {
 
     }
 }
