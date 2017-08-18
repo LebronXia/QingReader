@@ -6,8 +6,7 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPageBg"
-        >
+        android:background="@color/colorPageBg">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -18,19 +17,124 @@
             <!--内容头布局-->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </RelativeLayout>
+                android:layout_height="wrap_content"></RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                <!--另称-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="5dp"
+                    android:paddingTop="10dp"
+                    >
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="20dp"
+                        android:background="@color/colorTheme" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="另称"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+                    <TextView
+                        android:id="@+id/tv_movie_detail_bieming"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="新战狼/新战场"
+                        android:padding="12dp"
+                        />
+
+                    </LinearLayout>
+            </LinearLayout>
+
+            <!--剧情介绍-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 >
 
                 <!--另称-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:orientation="horizontal">
 
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="20dp"
+                        android:background="@color/colorTheme" />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="剧情介绍"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_movie_detail_context"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:text="故事发丝的缴费卡到家了富士康的减肥快乐距离"
+                    android:textSize="15sp"
+                    />
             </LinearLayout>
+
+            <!--导演/演员-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="20dp"
+                    android:background="@color/colorTheme" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="导演 / 演员"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <com.jcodecraeer.xrecyclerview.XRecyclerView
+                android:id="@+id/xrv_moviedetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </com.jcodecraeer.xrecyclerview.XRecyclerView>
 
         </LinearLayout>
 

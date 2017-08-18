@@ -1,9 +1,11 @@
 package com.riane.qingreader.data.network;
 
 import com.riane.qingreader.data.network.reponse.HotMovieBean;
+import com.riane.qingreader.data.network.reponse.MovieDetailBean;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 /**
  * Created by Riane on 2017/7/10.
@@ -26,6 +28,10 @@ public interface DoubanApiService {
     @GET("v2/movie/top250")
     Observable<HotMovieBean> getTop250();
 
-    //todo 获取电影详情
-   // Observable<>
+    /**
+     * 获取电影详情
+     * @return
+     */
+    @GET("v2/movie/subject/{id}")
+    Observable<MovieDetailBean> getMovieDetail(@Path("id") String id);
 }

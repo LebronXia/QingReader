@@ -3,6 +3,7 @@ package com.riane.qingreader.data.network;
 import com.riane.qingreader.data.network.reponse.GankIoDataBean;
 import com.riane.qingreader.data.network.reponse.GankIoDayBean;
 import com.riane.qingreader.data.network.reponse.HotMovieBean;
+import com.riane.qingreader.data.network.reponse.MovieDetailBean;
 import com.riane.qingreader.data.network.reponse.ThemeResponse;
 
 import io.reactivex.Observable;
@@ -27,4 +28,7 @@ public interface ApiHelper {
 
     //获取top250的电影
     Observable<HotMovieBean>  getTop250();
+
+    //获取电影详情
+    Observable<MovieDetailBean> getMovieDetail(String id);
 }

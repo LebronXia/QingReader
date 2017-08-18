@@ -5,6 +5,7 @@ import com.riane.qingreader.data.network.ApiHelper;
 import com.riane.qingreader.data.network.reponse.GankIoDataBean;
 import com.riane.qingreader.data.network.reponse.GankIoDayBean;
 import com.riane.qingreader.data.network.reponse.HotMovieBean;
+import com.riane.qingreader.data.network.reponse.MovieDetailBean;
 import com.riane.qingreader.data.network.reponse.ThemeResponse;
 
 import java.util.List;
@@ -68,5 +69,10 @@ public class ReaderRepository implements ReaderDataSource{
     @Override
     public Observable<HotMovieBean> getTop250() {
         return mReaderRemoteDataSource.getTop250();
+    }
+
+    @Override
+    public Observable<MovieDetailBean> getMovieDetail(String id) {
+        return mReaderRemoteDataSource.getMovieDetail(id);
     }
 }

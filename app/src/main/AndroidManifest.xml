@@ -25,6 +25,8 @@
         </activity>
 
         <activity android:name=".ui.search.SearchActivity"/>
+
+        <activity android:name=".ui.movie.MovieDetail.MovieDetailActivity"/>
     </application>
 
 </manifest>

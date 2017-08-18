@@ -13,6 +13,7 @@ import com.riane.qingreader.ui.base.BaseFragment;
 import com.riane.qingreader.ui.base.baseAdapter.CommonAdapter;
 import com.riane.qingreader.ui.movie.DaggerMovieComponent;
 import com.riane.qingreader.ui.movie.MovieContract;
+import com.riane.qingreader.ui.movie.MovieDetail.MovieDetailActivity;
 import com.riane.qingreader.ui.movie.MoviePresenter;
 import com.riane.qingreader.ui.movie.MoviePresenterModule;
 
@@ -68,7 +69,7 @@ public class HotMovieFragment extends BaseFragment implements MovieContract.View
         hotMovieAdapter.setOnItemClickListener(new CommonAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-
+                startActivity(MovieDetailActivity.newIntent(getActivity(), ""));
             }
 
             @Override

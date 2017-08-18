@@ -6,6 +6,7 @@ import com.riane.qingreader.QingReaderApplication;
 import com.riane.qingreader.data.network.reponse.GankIoDataBean;
 import com.riane.qingreader.data.network.reponse.GankIoDayBean;
 import com.riane.qingreader.data.network.reponse.HotMovieBean;
+import com.riane.qingreader.data.network.reponse.MovieDetailBean;
 import com.riane.qingreader.data.network.reponse.ThemeResponse;
 import com.riane.qingreader.util.NetUtil;
 
@@ -145,5 +146,10 @@ public class ReaderRemoteDataRepository implements ApiHelper{
     @Override
     public Observable<HotMovieBean> getTop250() {
         return mDoubanApiService.getTop250();
+    }
+
+    @Override
+    public Observable<MovieDetailBean> getMovieDetail(String id) {
+        return mDoubanApiService.getMovieDetail(id);
     }
 }
