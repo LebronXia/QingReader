@@ -3,6 +3,7 @@ package com.riane.qingreader.ui.movie.HotMovie;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.riane.qingreader.QingReaderApplication;
@@ -11,6 +12,7 @@ import com.riane.qingreader.data.network.reponse.film.Subject;
 import com.riane.qingreader.ui.adapter.HotMovieAdapter;
 import com.riane.qingreader.ui.base.BaseFragment;
 import com.riane.qingreader.ui.base.baseAdapter.CommonAdapter;
+import com.riane.qingreader.ui.base.baseAdapter.ViewHolder;
 import com.riane.qingreader.ui.movie.DaggerMovieComponent;
 import com.riane.qingreader.ui.movie.MovieContract;
 import com.riane.qingreader.ui.movie.MovieDetail.MovieDetailActivity;
@@ -32,6 +34,8 @@ public class HotMovieFragment extends BaseFragment implements MovieContract.View
 
     @BindView(R.id.xrv_hotmovie)
     XRecyclerView mXrvHotMovie;
+
+    private Subject mSubject;
 
     private HotMovieAdapter hotMovieAdapter;
     private List<Subject> mSubjects = new ArrayList<>();
@@ -68,15 +72,16 @@ public class HotMovieFragment extends BaseFragment implements MovieContract.View
 
         hotMovieAdapter.setOnItemClickListener(new CommonAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                startActivity(MovieDetailActivity.newIntent(getActivity(), ""));
+            public void onItemClick(View view, ViewHolder holder, int position) {
+                MovieDetailActivity.startMovieDetail(getActivity(), mSubjects.get(position), (ImageView) holder.getView(R.id.iv_hot_movie_cover));
             }
 
             @Override
-            public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
+            public boolean onItemLongClick(View view, ViewHolder holder, int position) {
                 return false;
             }
         });
+
         //暂时找不出原因，标题栏点击这个没反应
       loadHotMovieData();
     }

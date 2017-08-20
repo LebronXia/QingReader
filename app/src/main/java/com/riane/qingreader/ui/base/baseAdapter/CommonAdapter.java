@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.riane.qingreader.ui.base.BaseContract;
+
 import java.util.List;
 
 /**
@@ -72,9 +74,9 @@ public abstract class CommonAdapter<T> extends RecyclerView.Adapter<ViewHolder>{
     }
 
     public interface OnItemClickListener {
-        void onItemClick(View view, RecyclerView.ViewHolder holder, int position);
+        void onItemClick(View view, ViewHolder holder, int position);
 
-        boolean onItemLongClick(View view, RecyclerView.ViewHolder holder,  int position);
+        boolean onItemLongClick(View view, ViewHolder holder,  int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {

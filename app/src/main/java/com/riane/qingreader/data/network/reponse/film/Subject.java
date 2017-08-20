@@ -1,12 +1,13 @@
 package com.riane.qingreader.data.network.reponse.film;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by xiaobozheng on 8/14/2017.
  */
 
-public class Subject {
+public class Subject implements Serializable{
     /**
      * rating : {"max":10,"average":6.9,"stars":"35","min":0}
      * genres : ["剧情","喜剧"]
