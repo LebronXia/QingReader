@@ -1,26 +1,50 @@
 package com.riane.qingreader.ui.movie.MovieDetail;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.riane.qingreader.QingReaderApplication;
 import com.riane.qingreader.R;
 import com.riane.qingreader.data.network.reponse.MovieDetailBean;
 import com.riane.qingreader.data.network.reponse.film.Subject;
 import com.riane.qingreader.ui.base.BaseActivity;
+import com.riane.qingreader.util.ImgLoadUtil;
 
 import javax.inject.Inject;
+
+import butterknife.BindView;
+import jp.wasabeef.glide.transformations.BlurTransformation;
 
 /**
  * Created by xiaobozheng on 8/17/2017.
  */
 
 public class MovieDetailActivity extends BaseActivity implements MovieDetailContract.View{
+
     private static final String EXTRA_MOVDEL_SUB = "extra_subject";
+
+    @BindView(R.id.iv_movie_detail_cover)
+    ImageView mIvMoviewDetalCover;
+    @BindView(R.id.iv_base_titlebar_bg)
+    ImageView mIvBaseTitleBg;
+    @BindView(R.id.tb_base_title)
+    Toolbar mTbBaseTitle;
+
+    private Subject mSubject;
+    private String mMoreUrl;
+    private String mMovieName;
 
     @Inject
     MovieDetailPresenter movieDetailPresenter;
@@ -41,10 +65,39 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
 
     @Override
     protected void initViews() {
+        if (getIntent() != null){
+            mSubject = getIntent().getParcelableExtra(EXTRA_MOVDEL_SUB);
+        }
 
+        /**
+         * 加载titleBar背景
+         */
+        setImageHeaderBg(mSubject.getImages().getMedium());
     }
 
-    @Override
+    private void setImageHeaderBg(String imgUrl) {
+        Glide.with(this).load(imgUrl)
+                .error(R.mipmap.stackblur_default)
+                .bitmapTransform(new BlurTransformation(this, 23, 4))
+                .listener(new RequestListener<String, GlideDrawable>() {
+                    @Override
+                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        return false;
+                    }
+
+                    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        mTbBaseTitle.setBackgroundColor(Color.TRANSPARENT);
+                        mIvBaseTitleBg.setImageAlpha(0);
+                        mIvBaseTitleBg.setVisibility(View.VISIBLE);
+                        return false;
+                    }
+                }).into(mIvBaseTitleBg);
+
+        ImgLoadUtil.displayEspImage(imgUrl ,mIvMoviewDetalCover );
+    }
+
     protected void initData() {
         movieDetailPresenter.getMovieDetail("1764796");
     }

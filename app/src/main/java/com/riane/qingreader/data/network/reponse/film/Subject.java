@@ -1,13 +1,16 @@
 package com.riane.qingreader.data.network.reponse.film;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by xiaobozheng on 8/14/2017.
  */
 
-public class Subject implements Serializable{
+public class Subject implements Parcelable {
     /**
      * rating : {"max":10,"average":6.9,"stars":"35","min":0}
      * genres : ["剧情","喜剧"]
@@ -135,4 +138,58 @@ public class Subject implements Serializable{
     public void setCollect_count(int collect_count) {
         this.collect_count = collect_count;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.title);
+        dest.writeString(this.alt);
+        dest.writeParcelable(this.images, flags);
+        dest.writeParcelable(this.rating, flags);
+        dest.writeStringList(this.genres);
+        dest.writeList(this.casts);
+        dest.writeList(this.directors);
+        dest.writeString(this.year);
+        dest.writeString(this.subtype);
+        dest.writeString(this.original_title);
+        dest.writeInt(this.collect_count);
+    }
+
+    public Subject() {
+    }
+
+    protected Subject(Parcel in) {
+        this.id = in.readString();
+        this.title = in.readString();
+        this.alt = in.readString();
+        this.images = in.readParcelable(Image.class.getClassLoader());
+        this.rating = in.readParcelable(Rating.class.getClassLoader());
+        this.genres = in.createStringArrayList();
+        this.casts = new ArrayList<Person>();
+        in.readList(this.casts, Person.class.getClassLoader());
+        this.directors = new ArrayList<Person>();
+        in.readList(this.directors, Person.class.getClassLoader());
+        this.year = in.readString();
+        this.subtype = in.readString();
+        this.original_title = in.readString();
+        this.collect_count = in.readInt();
+    }
+
+    public static final Parcelable.Creator<Subject> CREATOR = new Parcelable.Creator<Subject>() {
+        @Override
+        public Subject createFromParcel(Parcel source) {
+            return new Subject(source);
+        }
+
+        @Override
+        public Subject[] newArray(int size) {
+            return new Subject[size];
+        }
+    };
 }
