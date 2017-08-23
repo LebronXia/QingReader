@@ -1,7 +1,6 @@
 package com.riane.qingreader.ui.movie.HotMovie;
 
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -73,7 +72,7 @@ public class HotMovieFragment extends BaseFragment implements MovieContract.View
         hotMovieAdapter.setOnItemClickListener(new CommonAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, ViewHolder holder, int position) {
-                MovieDetailActivity.startMovieDetail(getActivity(), mSubjects.get(position), (ImageView) holder.getView(R.id.iv_hot_movie_cover));
+                MovieDetailActivity.startMovieDetail(getActivity(), mSubjects.get(position - 1), (ImageView) holder.getView(R.id.iv_hot_movie_cover));
             }
 
             @Override
