@@ -33,8 +33,4 @@ public class Top250Fragment extends BaseFragment{
 
     }
 
-    @Override
-    protected void onRefresh() {
-
-    }
 }

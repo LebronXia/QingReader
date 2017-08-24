@@ -3,7 +3,6 @@ package com.riane.qingreader.ui.search;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 
-import com.google.common.escape.Escaper;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.riane.qingreader.QingReaderApplication;
 import com.riane.qingreader.R;
@@ -99,11 +98,6 @@ public class SearchResultFragment extends BaseFragment implements SearchContract
             return;
         }
         loadSearchData();
-    }
-
-    @Override
-    protected void onRefresh() {
-
     }
 
     @Override

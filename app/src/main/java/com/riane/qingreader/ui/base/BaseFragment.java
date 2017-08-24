@@ -7,6 +7,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+
+import com.riane.qingreader.view.StateLayout;
 
 import butterknife.ButterKnife;
 
@@ -18,24 +21,30 @@ public abstract class BaseFragment extends Fragment{
     public Context mContext;
     //fragment是否显示了
     protected boolean mIsVisible = false;
-    protected boolean isViewInitiated; //控件是否初始化完成
+    protected boolean isViewInitiated = false; //控件是否初始化完成
     protected boolean isDataInitiated = true; //数据第一次加载
     protected View parentView;
-    protected LayoutInflater mInflater;
+    private LinearLayout mLlRootLayout;
+    //protected LayoutInflater mInflater;
+    protected StateLayout stateLayout;
 
     public abstract int getLayoutResId();
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mLlRootLayout = new LinearLayout(getActivity());
         parentView = inflater.inflate(getLayoutResId(), container, false);
-
-        return parentView;
+        stateLayout = new StateLayout(getActivity());
+        mLlRootLayout.addView(stateLayout);
+        stateLayout.bindSuccessView(parentView);
+        return mLlRootLayout;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         ButterKnife.bind(this, view);
         initInjector();
         initView();
@@ -72,7 +81,6 @@ public abstract class BaseFragment extends Fragment{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        isViewInitiated = true;
         initDatas();
     }
 
@@ -92,8 +100,8 @@ public abstract class BaseFragment extends Fragment{
     protected void loadData(){};
 
 
-    /**
-     * 加载事变后点击后的操作
-     */
-    protected void onRefresh(){};
+//    /**
+//     * 加载事变后点击后的操作
+//     */
+//    protected void onRefresh(){};
 }

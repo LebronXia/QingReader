@@ -24,10 +24,6 @@ public class BookFragment extends BaseFragment{
 
     }
 
-    @Override
-    protected void onRefresh() {
-
-    }
 
     @Override
     protected void initView() {

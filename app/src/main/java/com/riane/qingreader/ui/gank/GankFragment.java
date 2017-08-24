@@ -1,13 +1,8 @@
 package com.riane.qingreader.ui.gank;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.riane.qingreader.R;
 import com.riane.qingreader.ui.adapter.MyFragmentPagerAdapter;
@@ -19,7 +14,6 @@ import com.riane.qingreader.ui.gank.child.WelfareFragment;
 
 import java.util.ArrayList;
 
-import butterknife.BindDimen;
 import butterknife.BindView;
 
 /**
@@ -48,13 +42,6 @@ public class GankFragment extends BaseFragment{
 
     @Override
     protected void initView() {
-        initFragmentList();
-        MyFragmentPagerAdapter myAdapter = new MyFragmentPagerAdapter(getChildFragmentManager(), mFragments, mTitleList);
-        mVpGank.setAdapter(myAdapter);
-        //左右预加载3个页面
-        mVpGank.setOffscreenPageLimit(3);
-        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
-        mTabLayout.setupWithViewPager(mVpGank);
     }
 
     private void initFragmentList() {
@@ -71,16 +58,19 @@ public class GankFragment extends BaseFragment{
 
     @Override
     protected void initDatas() {
-
+        stateLayout.showLoadingView();
+        initFragmentList();
+        MyFragmentPagerAdapter myAdapter = new MyFragmentPagerAdapter(getChildFragmentManager(), mFragments, mTitleList);
+        mVpGank.setAdapter(myAdapter);
+        //左右预加载3个页面
+        mVpGank.setOffscreenPageLimit(3);
+        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+        mTabLayout.setupWithViewPager(mVpGank);
+        stateLayout.showSuccessView();
     }
 
     @Override
     protected void loadData() {
-
-    }
-
-    @Override
-    protected void onRefresh() {
 
     }
 }

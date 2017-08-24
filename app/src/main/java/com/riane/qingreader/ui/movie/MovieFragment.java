@@ -41,6 +41,8 @@ public class MovieFragment extends BaseFragment{
 
     @Override
     protected void initView() {
+        stateLayout.showLoadingView();
+
         initFragmentList();
         MyFragmentPagerAdapter myAdapter = new MyFragmentPagerAdapter(getChildFragmentManager(), mFragments, mTitleList);
         mVpMovieList.setAdapter(myAdapter);
@@ -50,6 +52,7 @@ public class MovieFragment extends BaseFragment{
         myAdapter.notifyDataSetChanged();
         mTlMovieList.setTabMode(TabLayout.MODE_FIXED);
         mTlMovieList.setupWithViewPager(mVpMovieList);
+        stateLayout.showSuccessView();
     }
 
     private void initFragmentList() {

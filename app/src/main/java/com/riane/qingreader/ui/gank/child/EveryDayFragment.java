@@ -7,16 +7,14 @@ import android.view.View;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.riane.qingreader.QingReaderApplication;
 import com.riane.qingreader.R;
-import com.riane.qingreader.data.ReaderRepository;
-import com.riane.qingreader.data.ReaderRepositoryComponent;
 import com.riane.qingreader.data.network.reponse.AndroidBean;
-import com.riane.qingreader.data.network.reponse.GankIoDayBean;
 import com.riane.qingreader.ui.adapter.EveryDayAdapter;
 import com.riane.qingreader.ui.base.BaseFragment;
 import com.riane.qingreader.ui.gank.child.everyday.DaggerEveryDayGankComponent;
 import com.riane.qingreader.ui.gank.child.everyday.EveryDayGankContract;
 import com.riane.qingreader.ui.gank.child.everyday.EveryDayGankPresenter;
 import com.riane.qingreader.ui.gank.child.everyday.EveryDayGankPresenterModule;
+import com.riane.qingreader.view.StateLayout;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -30,7 +28,7 @@ import butterknife.BindView;
  * Created by Riane on 2017/7/12.
  */
 
-public class EveryDayFragment extends BaseFragment implements EveryDayGankContract.View{
+public class EveryDayFragment extends BaseFragment implements EveryDayGankContract.View, StateLayout.OnReloadListener{
 
     private static final int DAY_OF_MILLISECOND = 24*60*60*1000;
     @BindView(R.id.xrv_everyday)
@@ -71,6 +69,8 @@ public class EveryDayFragment extends BaseFragment implements EveryDayGankContra
 
     @Override
     protected void initDatas() {
+        stateLayout.showLoadingView();
+        isViewInitiated = true;
         mxRvEveryday.setPullRefreshEnabled(false);
         mxRvEveryday.setLoadingMoreEnabled(false);
         if (mHeaderView == null){
@@ -131,9 +131,8 @@ public class EveryDayFragment extends BaseFragment implements EveryDayGankContra
         loadEveryDayData();
     }
 
-    @Override
-    protected void onRefresh() {
-
+    public void onRefresh() {
+        loadEveryDayData();
     }
 
     @Override
@@ -141,6 +140,7 @@ public class EveryDayFragment extends BaseFragment implements EveryDayGankContra
        if (lists.isEmpty()){
            requestBeforeData();
        } else {
+           stateLayout.showSuccessView();
            mEveryDayAdapter.addAll(lists);
            mxRvEveryday.refreshComplete();
            isDataInitiated = false;
@@ -149,6 +149,7 @@ public class EveryDayFragment extends BaseFragment implements EveryDayGankContra
 
     @Override
     public void showError() {
-
+        //加载失败展示错误的view
+        stateLayout.showErrorView();
     }
 }

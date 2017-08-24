@@ -1,14 +1,11 @@
 package com.riane.qingreader.ui.gank.child;
 
 import android.content.DialogInterface;
-import android.provider.SyncStateContract;
-import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.TextView;
 
 import com.cocosw.bottomsheet.BottomSheet;
-import com.google.googlejavaformat.Indent;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.riane.qingreader.Contants;
 import com.riane.qingreader.QingReaderApplication;
@@ -21,8 +18,7 @@ import com.riane.qingreader.ui.gank.child.custom.CustomGankPresenter;
 import com.riane.qingreader.ui.gank.child.custom.CustomGankPresenterModule;
 import com.riane.qingreader.ui.gank.child.custom.DaggerCustomGankComponent;
 import com.riane.qingreader.util.SPUtils;
-
-import org.eclipse.jdt.internal.core.BecomeWorkingCopyOperation;
+import com.riane.qingreader.view.StateLayout;
 
 import javax.inject.Inject;
 
@@ -32,7 +28,7 @@ import butterknife.BindView;
  * Created by Riane on 2017/7/12.
  */
 
-public class CustomFragment extends BaseFragment implements CustomGankContract.View{
+public class CustomFragment extends BaseFragment implements CustomGankContract.View, StateLayout.OnReloadListener{
 
     private String mType = "all";
     private int mPage = 1;
@@ -62,7 +58,6 @@ public class CustomFragment extends BaseFragment implements CustomGankContract.V
         if(!isDataInitiated || !isViewInitiated || !mIsVisible){
             return;
         }
-
         loadCustomData();
     }
 
@@ -71,8 +66,8 @@ public class CustomFragment extends BaseFragment implements CustomGankContract.V
     }
 
     @Override
-    protected void onRefresh() {
-
+    public void onRefresh() {
+        loadCustomData();
     }
 
     @Override
@@ -82,6 +77,8 @@ public class CustomFragment extends BaseFragment implements CustomGankContract.V
 
     @Override
     protected void initDatas() {
+        stateLayout.showLoadingView();
+        isViewInitiated = true;
         mAndoridAdapter = new AndoridAdapter();
         mXRVGankCustom.setLayoutManager(new LinearLayoutManager(getActivity()));
         mXRVGankCustom.setAdapter(mAndoridAdapter);
@@ -102,17 +99,23 @@ public class CustomFragment extends BaseFragment implements CustomGankContract.V
 
     @Override
     public void showGankCustomData(GankIoDataBean gankIoDataBean) {
-        if (mPage == 1){
-            if (gankIoDataBean != null && gankIoDataBean.getResults() != null && gankIoDataBean.getResults().size() > 0){
-                //给RecycleVIew填充数据
-                setAdapter(gankIoDataBean);
-            }
+        if (gankIoDataBean.getResults().size() <= 0){
+            stateLayout.showEmptyView();
         } else {
-            if (gankIoDataBean != null && gankIoDataBean.getResults() != null && gankIoDataBean.getResults().size() > 0){
-                mXRVGankCustom.refreshComplete();
-                mAndoridAdapter.addAll(gankIoDataBean.getResults());
+            stateLayout.showSuccessView();
+            if (mPage == 1){
+                if (gankIoDataBean != null && gankIoDataBean.getResults() != null && gankIoDataBean.getResults().size() > 0){
+                    //给RecycleVIew填充数据
+                    setAdapter(gankIoDataBean);
+                }
+            } else {
+                if (gankIoDataBean != null && gankIoDataBean.getResults() != null && gankIoDataBean.getResults().size() > 0){
+                    mXRVGankCustom.refreshComplete();
+                    mAndoridAdapter.addAll(gankIoDataBean.getResults());
+                }
             }
         }
+
 
     }
 
@@ -209,6 +212,7 @@ public class CustomFragment extends BaseFragment implements CustomGankContract.V
 
     @Override
     public void showError() {
-
+        //加载失败展示错误的view
+        stateLayout.showErrorView();
     }
 }

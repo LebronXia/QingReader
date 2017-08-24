@@ -17,6 +17,7 @@ import com.riane.qingreader.ui.movie.MovieContract;
 import com.riane.qingreader.ui.movie.MovieDetail.MovieDetailActivity;
 import com.riane.qingreader.ui.movie.MoviePresenter;
 import com.riane.qingreader.ui.movie.MoviePresenterModule;
+import com.riane.qingreader.view.StateLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,11 +59,18 @@ public class HotMovieFragment extends BaseFragment implements MovieContract.View
 
     @Override
     protected void initView() {
-
+        stateLayout.showLoadingView();
+        stateLayout.setOnReloadListener(new StateLayout.OnReloadListener() {
+            @Override
+            public void onRefresh() {
+                loadHotMovieData();
+            }
+        });
     }
 
     @Override
     protected void initDatas() {
+        isViewInitiated = true;
         hotMovieAdapter = new HotMovieAdapter(getActivity(), R.layout.item_hotmovie, mSubjects);
         mXrvHotMovie.setLayoutManager(new LinearLayoutManager(getActivity()));
         mXrvHotMovie.setAdapter(hotMovieAdapter);
@@ -98,19 +106,21 @@ public class HotMovieFragment extends BaseFragment implements MovieContract.View
     }
 
     @Override
-    protected void onRefresh() {
-
-    }
-
-    @Override
     public void showError() {
-
+        //加载失败展示错误的view
+        stateLayout.showErrorView();
     }
 
     @Override
     public void showLiveMovieData(List<Subject> subjects) {
-        mXrvHotMovie.refreshComplete();
-        mSubjects.addAll(subjects);
-        hotMovieAdapter.notifyDataSetChanged();
+        if (subjects.size() <= 0){
+            stateLayout.showEmptyView();
+        } else {
+            stateLayout.showSuccessView();
+            mXrvHotMovie.refreshComplete();
+            mSubjects.addAll(subjects);
+            hotMovieAdapter.notifyDataSetChanged();
+        }
+
     }
 }

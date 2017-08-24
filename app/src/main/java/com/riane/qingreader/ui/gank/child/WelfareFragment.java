@@ -13,6 +13,7 @@ import com.riane.qingreader.ui.gank.child.custom.CustomGankContract;
 import com.riane.qingreader.ui.gank.child.custom.CustomGankPresenter;
 import com.riane.qingreader.ui.gank.child.custom.CustomGankPresenterModule;
 import com.riane.qingreader.ui.gank.child.custom.DaggerCustomGankComponent;
+import com.riane.qingreader.view.StateLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ import butterknife.BindView;
  * Created by Riane on 2017/7/12.
  */
 
-public class WelfareFragment extends BaseFragment implements CustomGankContract.View{
+public class WelfareFragment extends BaseFragment implements CustomGankContract.View, StateLayout.OnReloadListener{
 
     @BindView(R.id.rv_gank_welfare)
     XRecyclerView mRvGankWelfare;
@@ -55,6 +56,13 @@ public class WelfareFragment extends BaseFragment implements CustomGankContract.
 
     @Override
     protected void initView() {
+
+    }
+
+    @Override
+    protected void initDatas() {
+        stateLayout.showLoadingView();
+        isViewInitiated = true;
         mWelfareAdapter = new WelfareAdapter(getActivity(), R.layout.item_welfare, resultBeanList);
         mRvGankWelfare.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         mRvGankWelfare.setAdapter(mWelfareAdapter);
@@ -72,17 +80,11 @@ public class WelfareFragment extends BaseFragment implements CustomGankContract.
                 loadWelfareData();
             }
         });
-
     }
 
     @Override
-    protected void initDatas() {
-
-    }
-
-    @Override
-    protected void onRefresh() {
-
+    public void onRefresh() {
+        loadWelfareData();
     }
 
     @Override
@@ -99,27 +101,34 @@ public class WelfareFragment extends BaseFragment implements CustomGankContract.
 
     @Override
     public void showGankCustomData(GankIoDataBean gankIoDataBean) {
-        if (isRefresh){
-            //mWelfareAdapter.clear();
-            mRvGankWelfare.refreshComplete();
-            resultBeanList.clear();
-            resultBeanList.addAll(gankIoDataBean.getResults());
-            mWelfareAdapter.notifyDataSetChanged();
-            isRefresh = false;
+        if (gankIoDataBean.getResults().size() <= 0){
+            stateLayout.showEmptyView();
         } else {
-            if (gankIoDataBean != null && gankIoDataBean.getResults() != null && gankIoDataBean.getResults().size() > 0){
+            stateLayout.showSuccessView();
+            if (isRefresh){
+                //mWelfareAdapter.clear();
                 mRvGankWelfare.refreshComplete();
+                resultBeanList.clear();
                 resultBeanList.addAll(gankIoDataBean.getResults());
                 mWelfareAdapter.notifyDataSetChanged();
+                isRefresh = false;
             } else {
-                mRvGankWelfare.setNoMore(true);
+                if (gankIoDataBean != null && gankIoDataBean.getResults() != null && gankIoDataBean.getResults().size() > 0){
+                    mRvGankWelfare.refreshComplete();
+                    resultBeanList.addAll(gankIoDataBean.getResults());
+                    mWelfareAdapter.notifyDataSetChanged();
+                } else {
+                    mRvGankWelfare.setNoMore(true);
+                }
             }
         }
+
 
     }
 
     @Override
     public void showError() {
-
+        //加载失败展示错误的view
+        stateLayout.showErrorView();
     }
 }

@@ -102,11 +102,6 @@ public class SearchHotWordFragment extends BaseFragment implements SearchContrac
     }
 
     @Override
-    protected void onRefresh() {
-
-    }
-
-    @Override
     public void showError() {
 
     }
