@@ -27,7 +27,7 @@ public interface ApiHelper {
     Observable<HotMovieBean> getLiveFilm();
 
     //获取top250的电影
-    Observable<HotMovieBean>  getTop250();
+    Observable<HotMovieBean>  getTop250(int start, int count);
 
     //获取电影详情
     Observable<MovieDetailBean> getMovieDetail(String id);

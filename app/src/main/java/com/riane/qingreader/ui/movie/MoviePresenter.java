@@ -42,4 +42,22 @@ public class MoviePresenter extends BasePresenter implements MovieContract.Prese
             }
         }));
     }
+
+    @Override
+    public void getTop250Movie(int start, int count) {
+        addSubscrebe(mReaderRepository.getTop250(start, count)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Consumer<HotMovieBean>() {
+            @Override
+            public void accept(HotMovieBean hotMovieBean) throws Exception {
+                mView.showTop250MovieData(hotMovieBean.getSubjects());
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                mView.showError();
+            }
+        }));
+    }
 }

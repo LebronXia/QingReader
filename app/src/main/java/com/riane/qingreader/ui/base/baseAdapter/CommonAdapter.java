@@ -6,8 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.riane.qingreader.ui.base.BaseContract;
-
 import java.util.List;
 
 /**
@@ -66,6 +64,16 @@ public abstract class CommonAdapter<T> extends RecyclerView.Adapter<ViewHolder>{
     }
 
     public abstract void convert(ViewHolder holder, T t);
+
+    public void addAll(List<T> data){
+        this.mDatas.addAll(data);
+        notifyDataSetChanged();
+    }
+
+    public void clear() {
+        mDatas.clear();
+        notifyDataSetChanged();
+    }
 
     @Override
     public int getItemCount()

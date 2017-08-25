@@ -67,8 +67,8 @@ public class ReaderRepository implements ReaderDataSource{
     }
 
     @Override
-    public Observable<HotMovieBean> getTop250() {
-        return mReaderRemoteDataSource.getTop250();
+    public Observable<HotMovieBean> getTop250(int start, int count) {
+        return mReaderRemoteDataSource.getTop250(start, count);
     }
 
     @Override

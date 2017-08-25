@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@android:color/transparent"
     >
 
@@ -10,7 +10,7 @@
             android:id="@+id/iv_item_bg"
             android:layout_width="match_parent"
             android:layout_height="310dp"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             />
 
         <LinearLayout
@@ -61,6 +61,7 @@
                         android:layout_marginLeft="5dp"
                         android:ellipsize="end"
                         android:lines="1"
+                        android:textColor="@color/colorwhite"
                         />
                 </LinearLayout>
 
@@ -79,10 +80,10 @@
                         >
 
                         <TextView
-
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="导演："
+                            android:textColor="@color/colorwhite"
                             />
 
                         <View
@@ -100,6 +101,7 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:maxLines="1"
+                        android:textColor="@color/colorwhite"
                         />
                 </LinearLayout>
 
@@ -115,6 +117,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="主演："
+                        android:textColor="@color/colorwhite"
                         />
 
                     <TextView
@@ -124,6 +127,7 @@
                         android:ellipsize="end"
                         android:maxLines="2"
                         android:text=""
+                        android:textColor="@color/colorwhite"
                         />
                 </LinearLayout>
 
@@ -140,6 +144,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="类型："
+                        android:textColor="@color/colorwhite"
                         />
 
                     <TextView
@@ -148,6 +153,7 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:maxLines="1"
+                        android:textColor="@color/colorwhite"
                         />
                 </LinearLayout>
 
@@ -160,6 +166,7 @@
                     android:layout_marginTop="2dp"
                     android:ellipsize="end"
                     android:text="上映日期："
+                    android:textColor="@color/colorwhite"
                     />
 
                 <!--制片城市-->
@@ -172,6 +179,7 @@
                     android:ellipsize="end"
                     android:lines="2"
                     android:text="制片国家/地区："
+                    android:textColor="@color/colorwhite"
                     />
 
 

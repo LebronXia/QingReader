@@ -3,12 +3,15 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:id="@+id/xrv_topmovie"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Top250榜单"
-        android:gravity="center"
-        android:textSize="18sp"
-        />
+        android:layout_height="match_parent"
+        android:scrollbarSize="4dp"
+        android:scrollbarThumbVertical="@color/tabBackground"
+        android:scrollbars="vertical"
+        >
+
+    </com.jcodecraeer.xrecyclerview.XRecyclerView>
 
 </LinearLayout>

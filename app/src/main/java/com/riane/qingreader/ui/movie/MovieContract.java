@@ -13,10 +13,14 @@ public interface MovieContract {
 
     interface View extends BaseContract.BaseView{
         void showLiveMovieData(List<Subject> subjects);
+
+        void showTop250MovieData(List<Subject> mTopSubjects);
     }
 
     interface Presenter extends BaseContract.BasePresenter{
         void getLiveMovie();
+
+        void getTop250Movie(int start, int count);
     }
 
 }

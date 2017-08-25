@@ -25,7 +25,6 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ToolbarStyle"
         >
-
     </android.support.v7.widget.Toolbar>
 
 </RelativeLayout>

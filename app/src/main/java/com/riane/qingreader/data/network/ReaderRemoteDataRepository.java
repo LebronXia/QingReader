@@ -144,8 +144,8 @@ public class ReaderRemoteDataRepository implements ApiHelper{
     }
 
     @Override
-    public Observable<HotMovieBean> getTop250() {
-        return mDoubanApiService.getTop250();
+    public Observable<HotMovieBean> getTop250(int start, int count) {
+        return mDoubanApiService.getTop250(start, count);
     }
 
     @Override

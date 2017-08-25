@@ -123,4 +123,9 @@ public class HotMovieFragment extends BaseFragment implements MovieContract.View
         }
 
     }
+
+    @Override
+    public void showTop250MovieData(List<Subject> mTopSubjects) {
+
+    }
 }
