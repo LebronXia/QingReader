@@ -1,6 +1,7 @@
 package com.riane.qingreader.ui.movie.Top250Movie;
 
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.riane.qingreader.QingReaderApplication;
@@ -8,6 +9,8 @@ import com.riane.qingreader.R;
 import com.riane.qingreader.data.network.reponse.film.Subject;
 import com.riane.qingreader.ui.adapter.Top250MovieAdapter;
 import com.riane.qingreader.ui.base.BaseFragment;
+import com.riane.qingreader.ui.base.baseAdapter.CommonAdapter;
+import com.riane.qingreader.ui.base.baseAdapter.ViewHolder;
 import com.riane.qingreader.ui.movie.DaggerMovieComponent;
 import com.riane.qingreader.ui.movie.MovieContract;
 import com.riane.qingreader.ui.movie.MoviePresenter;
@@ -81,6 +84,18 @@ public class Top250Fragment extends BaseFragment implements MovieContract.View{
                 loadTop250MovieData();
             }
         });
+
+        mTop250MovieAdapter.setOnItemClickListener(new CommonAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, ViewHolder holder, int position) {
+
+            }
+
+            @Override
+            public boolean onItemLongClick(View view, ViewHolder holder, int position) {
+                return false;
+            }
+        });
     }
 
     @Override
@@ -110,14 +125,12 @@ public class Top250Fragment extends BaseFragment implements MovieContract.View{
             if (mTopSubjects != null && mTopSubjects.size() > 0){
                 stateLayout.showSuccessView();
                 mTop250MovieAdapter.clear();
-                mTop250MovieAdapter.addAll(mTopSubjects);
-
                 mXrvTopMovie.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
                 mXrvTopMovie.setAdapter(mTop250MovieAdapter);
+                mTop250MovieAdapter.addAll(mTopSubjects);
+
                 mXrvTopMovie.setPullRefreshEnabled(false);
                 mXrvTopMovie.setLoadingMoreEnabled(true);
-
-
 
             } else {
                 stateLayout.showEmptyView();
@@ -130,8 +143,6 @@ public class Top250Fragment extends BaseFragment implements MovieContract.View{
                 mXrvTopMovie.setNoMore(true);
             }
         }
-
-
     }
 
 }

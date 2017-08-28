@@ -21,7 +21,7 @@ public class Top250MovieAdapter extends CommonAdapter<Subject>{
 
     @Override
     public void convert(ViewHolder holder, Subject subject) {
-        holder.setImageUrl(R.id.iv_top_photo, subject.getImages().getMedium());
+        holder.setImageUrl(R.id.iv_top_photo, subject.getImages().getLarge());
         holder.setText(R.id.tv_top250_name, subject.getTitle());
         holder.setText(R.id.tv_top250_rate, String.format("评分：%s", subject.getRating().getAverage()));
     }

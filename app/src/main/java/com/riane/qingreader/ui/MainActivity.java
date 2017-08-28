@@ -78,7 +78,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     public void OnClick(View view){
         switch (view.getId()){
             case R.id.Fl_title_menu:
-                Logger.d("你好！！！");
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 break;
             case R.id.iv_main_disco:
