@@ -72,6 +72,8 @@ public class Top250Fragment extends BaseFragment implements MovieContract.View{
     protected void initDatas() {
         isViewInitiated = true;
         mTop250MovieAdapter = new Top250MovieAdapter(getActivity(), R.layout.item_top250movie, mSubjects);
+        mXrvTopMovie.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
+        mXrvTopMovie.setAdapter(mTop250MovieAdapter);
         mXrvTopMovie.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
@@ -124,10 +126,9 @@ public class Top250Fragment extends BaseFragment implements MovieContract.View{
         if (start == 0){
             if (mTopSubjects != null && mTopSubjects.size() > 0){
                 stateLayout.showSuccessView();
-                mTop250MovieAdapter.clear();
-                mXrvTopMovie.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
-                mXrvTopMovie.setAdapter(mTop250MovieAdapter);
-                mTop250MovieAdapter.addAll(mTopSubjects);
+                mSubjects.clear();
+                mSubjects.addAll(mTopSubjects);
+                mTop250MovieAdapter.notifyDataSetChanged();
 
                 mXrvTopMovie.setPullRefreshEnabled(false);
                 mXrvTopMovie.setLoadingMoreEnabled(true);
