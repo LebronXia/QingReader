@@ -4,19 +4,10 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="福利"
-        android:textSize="26sp"
-        />
-
     <com.jcodecraeer.xrecyclerview.XRecyclerView
         android:id="@+id/rv_gank_welfare"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         >
 
     </com.jcodecraeer.xrecyclerview.XRecyclerView>

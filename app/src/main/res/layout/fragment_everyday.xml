@@ -5,14 +5,6 @@
                 android:orientation="vertical"
     >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="每日推荐"
-        android:textSize="27sp"
-        />
-
     <com.jcodecraeer.xrecyclerview.XRecyclerView
         android:id="@+id/xrv_everyday"
         android:layout_width="match_parent"
