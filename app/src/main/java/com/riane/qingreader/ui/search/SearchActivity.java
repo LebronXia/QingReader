@@ -162,7 +162,6 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
     public void hideInputManager(){
         if (mSearchView != null){
             mImm.hideSoftInputFromWindow(mSearchView.getWindowToken(), 0);
-
         }
         //清除searchVIew焦点 并存入数据库
         mSearchView.clearFocus();

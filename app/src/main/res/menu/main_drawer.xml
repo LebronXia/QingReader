@@ -11,6 +11,11 @@
             />
 
         <item
+            android:id="@+id/nav_my_collect"
+            android:title="我的收藏"
+            />
+
+        <item
             android:id="@+id/nav_day_night"
             android:icon="@mipmap/ic_nav_night"
             android:title="@string/dayornight"

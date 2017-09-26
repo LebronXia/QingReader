@@ -2,7 +2,6 @@ package com.riane.qingreader.ui.movie.Top250Movie;
 
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.riane.qingreader.QingReaderApplication;
@@ -14,7 +13,6 @@ import com.riane.qingreader.ui.base.baseAdapter.CommonAdapter;
 import com.riane.qingreader.ui.base.baseAdapter.ViewHolder;
 import com.riane.qingreader.ui.movie.DaggerMovieComponent;
 import com.riane.qingreader.ui.movie.MovieContract;
-import com.riane.qingreader.ui.movie.MovieDetail.MovieDetailActivity;
 import com.riane.qingreader.ui.movie.MoviePresenter;
 import com.riane.qingreader.ui.movie.MoviePresenterModule;
 import com.riane.qingreader.view.StateLayout;
@@ -127,9 +125,9 @@ public class Top250Fragment extends BaseFragment implements MovieContract.View, 
             if (mTopSubjects != null && mTopSubjects.size() > 0){
                 stateLayout.showSuccessView();
                 mTop250MovieAdapter.clear();
-                mTop250MovieAdapter.addAll(mTopSubjects);
                 mXrvTopMovie.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
                 mXrvTopMovie.setAdapter(mTop250MovieAdapter);
+                mTop250MovieAdapter.addAll(mTopSubjects);
 
                 mXrvTopMovie.setPullRefreshEnabled(false);
                 mXrvTopMovie.setLoadingMoreEnabled(true);

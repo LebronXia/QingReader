@@ -12,7 +12,6 @@
         android:scrollbarFadeDuration="1"
         android:scrollbarSize="4dp"
         >
-
     </com.jcodecraeer.xrecyclerview.XRecyclerView>
 
 </LinearLayout>
