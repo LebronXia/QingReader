@@ -1,6 +1,11 @@
 package com.riane.qingreader.ui.gank.child;
 
+import android.content.res.Resources;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.TypedValue;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.riane.qingreader.Contants;
@@ -13,11 +18,14 @@ import com.riane.qingreader.ui.gank.child.custom.CustomGankContract;
 import com.riane.qingreader.ui.gank.child.custom.CustomGankPresenter;
 import com.riane.qingreader.ui.gank.child.custom.CustomGankPresenterModule;
 import com.riane.qingreader.ui.gank.child.custom.DaggerCustomGankComponent;
+import com.riane.qingreader.util.RxBus;
 import com.riane.qingreader.view.StateLayout;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import io.reactivex.Flowable;
+import io.reactivex.functions.Consumer;
 
 /**
  * Created by Riane on 2017/7/12.
@@ -27,6 +35,7 @@ public class AndroidFragment extends BaseFragment implements CustomGankContract.
 
     @BindView(R.id.xrv_android)
     XRecyclerView mAndroidXRecycleView;
+    private Flowable<Boolean> observable;
     private AndoridAdapter mAndoridAdapter;
     private int mPage = 1;
 
@@ -50,6 +59,34 @@ public class AndroidFragment extends BaseFragment implements CustomGankContract.
 
     @Override
     protected void initView() {
+
+        observable = RxBus.getInstance().register(Boolean.class);
+        observable.subscribe(new Consumer<Boolean>() {
+            @Override
+            public void accept(Boolean aBoolean) throws Exception {
+             refreshUI();
+            }
+        });
+    }
+
+    private void refreshUI() {
+        TypedValue backgroundcolor_item = new TypedValue();
+        TypedValue textColor = new TypedValue();
+        TypedValue backgroundcolor = new TypedValue();
+
+        Resources.Theme theme = getActivity().getTheme();
+        theme.resolveAttribute(R.attr.backgroundcolor_item, backgroundcolor_item, true);
+        theme.resolveAttribute(R.attr.textcolor, textColor, true);
+        theme.resolveAttribute(R.attr.backgroundcolor, backgroundcolor, true);
+        Resources resources = getResources();
+        int childCount = mAndroidXRecycleView.getChildCount();
+        for (int childIndex = 0; childIndex < childCount; childIndex ++){
+            ViewGroup childView = (ViewGroup) mAndroidXRecycleView.getChildAt(childIndex);
+            LinearLayout ll = (LinearLayout) childView.findViewById(R.id.ll_android_top);
+            ll.setBackgroundResource(backgroundcolor_item.resourceId);
+            TextView title = (TextView) childView.findViewById(R.id.tv_android_des);
+            title.setTextColor(resources.getColor(textColor.resourceId));
+        }
 
     }
 

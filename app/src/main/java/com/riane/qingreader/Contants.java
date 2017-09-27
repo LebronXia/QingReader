@@ -13,4 +13,5 @@ public class Contants {
     public static final int PAGECOUNT = 10;
 
     public static String DB_NAME = "QingReader.db";
+    public static boolean isDay;
 }

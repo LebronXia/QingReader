@@ -1,6 +1,7 @@
 package com.riane.qingreader.ui;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -10,8 +11,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import com.orhanobut.logger.Logger;
 import com.riane.qingreader.R;
 import com.riane.qingreader.ui.adapter.MyFragmentPagerAdapter;
 import com.riane.qingreader.ui.base.BaseActivity;
@@ -19,13 +21,18 @@ import com.riane.qingreader.ui.book.BookFragment;
 import com.riane.qingreader.ui.gank.GankFragment;
 import com.riane.qingreader.ui.movie.MovieFragment;
 import com.riane.qingreader.ui.search.SearchActivity;
+import com.riane.qingreader.util.RxBus;
+import com.riane.qingreader.util.SPUtils;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener{
+import static com.riane.qingreader.Contants.KEY_MODE_NIGHT;
+import static com.riane.qingreader.Contants.isDay;
+
+public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener, View.OnClickListener{
     @BindView(R.id.vp_mian_content)
     ViewPager mVpMainContent;
     @BindView(R.id.drawer_layout)
@@ -38,6 +45,9 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     ImageView mIvMainMusic;
     @BindView(R.id.iv_main_friends)
     ImageView mIvMainFriends;
+    private TextView mTvDayorNight;
+
+    private LinearLayout headerView;
 
     @Override
     protected int getLayoutId() {
@@ -53,6 +63,36 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     protected void initViews() {
         initContentFragment();
 
+        headerView = (LinearLayout) mNavigationView.getHeaderView(0);
+        mTvDayorNight = (TextView) headerView.findViewById(R.id.tv_header_day_or_night);
+        isDay = SPUtils.getBoolean(KEY_MODE_NIGHT, true);
+        if (isDay){
+            mTvDayorNight.setText("白天模式");
+        } else{
+            mTvDayorNight.setText("夜晚模式");
+        }
+        initListener();
+    }
+
+    private void initListener() {
+        mTvDayorNight.setOnClickListener(this);
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.nav_homepage:
+
+                        break;
+                    case R.id.nav_my_collect:
+
+                        break;
+                    case R.id.nav_day_night:
+                        RxBus.getInstance().post(true);
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     private void initContentFragment() {
@@ -113,7 +153,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         switch (item.getItemId()){
             case R.id.action_search:
                 startActivity(new Intent(MainActivity.this, SearchActivity.class));
-
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -149,5 +188,24 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.tv_header_day_or_night:
+                if (isDay){
+                    isDay = false;
+                    setTheme(R.style.NightTheme);
+                    mTvDayorNight.setText("夜晚模式");
+                } else {
+                    isDay = true;
+                    setTheme(R.style.DayTheme);
+                    mTvDayorNight.setText("白天模式");
+                }
+                SPUtils.putBoolean(KEY_MODE_NIGHT, isDay);
+                RxBus.getInstance().post(isDay);
+                break;
+        }
     }
 }
