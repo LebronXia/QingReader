@@ -3,7 +3,6 @@ package com.riane.qingreader.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.riane.qingreader.Contants;
 import com.riane.qingreader.QingReaderApplication;
 
 import java.util.ArrayList;
@@ -164,12 +163,12 @@ public class SPUtils {
         editor.remove(key).apply();
     }
 
-    public static boolean getNightMode() {
-        return SPUtils.getBoolean(Contants.KEY_MODE_NIGHT, false);
-    }
-
-    public static void setNightMode(boolean nightMode) {
-        SPUtils.putBoolean(Contants.KEY_MODE_NIGHT, nightMode);
-    }
+//    public static boolean getNightMode() {
+//        return SPUtils.getBoolean(Contants.KEY_MODE_NIGHT, false);
+//    }
+//
+//    public static void setNightMode(boolean nightMode) {
+//        SPUtils.putBoolean(Contants.KEY_MODE_NIGHT, nightMode);
+//    }
 
 }

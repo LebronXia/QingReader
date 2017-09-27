@@ -37,6 +37,7 @@
     <color name="itemBackground">#DD7D7D7D</color>
     <!--item的5.0一下版本选择器颜色-->
     <color name="itemLowBackground">#d9d9d9</color>
+    <color name="black">#000000</color> <!--黑色 -->
 
 
     <color name="gank_zise">#9370DB</color>
@@ -53,6 +54,17 @@
 
     <!--透明色-->
     <color name="colorTransparent">#00000000</color>
+    <color name="color222222">#222222</color>
+    <color name="color252525">#252525</color>
 
+    <!--日间-->
+    <color name="backgroundColor">#F2F3F3</color>
+
+    <!--夜间-->
+    <color name="night_item_background">#262626</color>
+    <color name="night_item_textcolor">#ACACAC</color>
+    <color name="tablayoutbgcolor">#262626</color>
+    <color name="settingtextcolor">#8A8A8A</color>
+    <color name="commontextcolor">#8A8A8A</color>
 
 </resources>
