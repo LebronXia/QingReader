@@ -1,11 +1,9 @@
 package com.riane.qingreader.ui.gank.child;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.TypedValue;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.riane.qingreader.Contants;
@@ -54,17 +52,22 @@ public class AndroidFragment extends BaseFragment implements CustomGankContract.
                 .readerRepositoryComponent(((QingReaderApplication)getActivity().getApplication())
                         .getReaderRepositoryComponent()).build()
                 .inject(this);
-
     }
 
     @Override
     protected void initView() {
 
+
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
         observable = RxBus.getInstance().register(Boolean.class);
         observable.subscribe(new Consumer<Boolean>() {
             @Override
             public void accept(Boolean aBoolean) throws Exception {
-             refreshUI();
+                refreshUI();
             }
         });
     }
@@ -79,13 +82,14 @@ public class AndroidFragment extends BaseFragment implements CustomGankContract.
         theme.resolveAttribute(R.attr.textcolor, textColor, true);
         theme.resolveAttribute(R.attr.backgroundcolor, backgroundcolor, true);
         Resources resources = getResources();
+
         int childCount = mAndroidXRecycleView.getChildCount();
-        for (int childIndex = 0; childIndex < childCount; childIndex ++){
-            ViewGroup childView = (ViewGroup) mAndroidXRecycleView.getChildAt(childIndex);
-            LinearLayout ll = (LinearLayout) childView.findViewById(R.id.ll_android_top);
-            ll.setBackgroundResource(backgroundcolor_item.resourceId);
-            TextView title = (TextView) childView.findViewById(R.id.tv_android_des);
-            title.setTextColor(resources.getColor(textColor.resourceId));
+        for (int childIndex = 1; childIndex < childCount; childIndex ++){
+//            ViewGroup childView = (ViewGroup) mAndroidXRecycleView.getChildAt(childIndex);
+//            LinearLayout ll = (LinearLayout) childView.findViewById(R.id.ll_android_top);
+//            ll.setBackgroundResource(backgroundcolor_item.resourceId);
+//            TextView title = (TextView) childView.findViewById(R.id.tv_android_des);
+//            title.setTextColor(resources.getColor(textColor.resourceId));
         }
 
     }
@@ -164,4 +168,9 @@ public class AndroidFragment extends BaseFragment implements CustomGankContract.
         stateLayout.showErrorView();
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        RxBus.getInstance().unregisterAll();
+    }
 }
