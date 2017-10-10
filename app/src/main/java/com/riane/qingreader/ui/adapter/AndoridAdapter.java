@@ -1,6 +1,7 @@
 package com.riane.qingreader.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,15 +13,13 @@ import android.widget.TextView;
 import com.haozhang.lib.SlantedTextView;
 import com.riane.qingreader.R;
 import com.riane.qingreader.data.network.reponse.GankIoDataBean;
-import com.riane.qingreader.data.network.reponse.GankIoDayBean;
+import com.riane.qingreader.ui.detail.DetailActivity;
 import com.riane.qingreader.util.ImgLoadUtil;
 import com.riane.qingreader.util.TimeUtil;
 
-import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -32,9 +31,10 @@ public class AndoridAdapter extends RecyclerView.Adapter<AndoridAdapter.AndroidV
 
     private List<GankIoDataBean.ResultBean> mAndroidBeanList = new ArrayList<>();
     private boolean mIsAll = false;
+    private Context mContext;
 
-    public AndoridAdapter(){
-
+    public AndoridAdapter(Context context){
+        this.mContext = context;
     }
 
     @Override
@@ -46,6 +46,7 @@ public class AndoridAdapter extends RecyclerView.Adapter<AndoridAdapter.AndroidV
     @Override
     public void onBindViewHolder(AndroidViewHolder holder, int position) {
 
+        final GankIoDataBean.ResultBean result = mAndroidBeanList.get(position);
         if (mIsAll){
             if (mAndroidBeanList.get(position).getType().equals("福利")){
                 holder.mIvAllWelfare.setVisibility(View.VISIBLE);
@@ -103,6 +104,14 @@ public class AndoridAdapter extends RecyclerView.Adapter<AndoridAdapter.AndroidV
         holder.mTvAndroidTime.setText(TimeUtil.getTranslateTime(mAndroidBeanList.get(position).getPublishedAt()));
         holder.mTvAndroidWho.setText(mAndroidBeanList.get(position).getWho());
         holder.mTvAndroidDes.setText(mAndroidBeanList.get(position).getDesc());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, DetailActivity.class);
+                intent.putExtra(DetailActivity.Companion.getINTENT_DETATL_RESULT(), result);
+                mContext.startActivity(intent);
+            }
+        });
 
     }
 

@@ -98,7 +98,7 @@ public class AndroidFragment extends BaseFragment implements CustomGankContract.
     protected void initDatas() {
         stateLayout.showLoadingView();
         isViewInitiated = true;
-        mAndoridAdapter = new AndoridAdapter();
+        mAndoridAdapter = new AndoridAdapter(getActivity());
         mAndroidXRecycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAndroidXRecycleView.setAdapter(mAndoridAdapter);
         mAndroidXRecycleView.setLoadingListener(new XRecyclerView.LoadingListener(){

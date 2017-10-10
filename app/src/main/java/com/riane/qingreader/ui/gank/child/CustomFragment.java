@@ -79,7 +79,7 @@ public class CustomFragment extends BaseFragment implements CustomGankContract.V
     protected void initDatas() {
         stateLayout.showLoadingView();
         isViewInitiated = true;
-        mAndoridAdapter = new AndoridAdapter();
+        mAndoridAdapter = new AndoridAdapter(getActivity());
         mXRVGankCustom.setLayoutManager(new LinearLayoutManager(getActivity()));
         //mXRVGankCustom.setLayoutManager(new VegaLayoutManager());
         mXRVGankCustom.setAdapter(mAndoridAdapter);
