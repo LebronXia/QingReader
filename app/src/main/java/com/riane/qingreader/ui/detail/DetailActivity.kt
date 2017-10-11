@@ -6,18 +6,23 @@ import android.net.ConnectivityManager
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.support.v7.widget.Toolbar
+import android.view.Menu
+import android.view.MenuItem
 import android.view.ViewGroup
 import android.webkit.*
 import butterknife.BindView
+import com.riane.qingreader.QingReaderApplication
 import com.riane.qingreader.R
 import com.riane.qingreader.data.network.reponse.GankIoDataBean
+import com.riane.qingreader.data.network.reponse.ResultBean
 import com.riane.qingreader.ui.base.BaseActivity
+import javax.inject.Inject
 
 
 /**
  * Created by xiaobozheng on 10/9/2017.
  */
-class DetailActivity : BaseActivity(){
+class DetailActivity : BaseActivity(),DetailContract.View{
     //http://blog.csdn.net/carson_ho/article/details/52693322
     //静态的写法
     companion object{
@@ -29,18 +34,25 @@ class DetailActivity : BaseActivity(){
 //  @BindView(R.id.scrollview)
 //  lateinit var svDetail : ScrollView
     @BindView(R.id.wv_detail)
-    var wvDetail: WebView? = null
+    lateinit var wvDetail: WebView
     lateinit var webUrl: String
 
     var result: GankIoDataBean.ResultBean? = null
-    //@Inject lateinit var mPresenter: DetailPresenter
+    @Inject lateinit var mPresenter: DetailPresenter
 
     override fun getLayoutId(): Int {
         return R.layout.activity_detail
     }
 
-    override fun initInjector() {
+    lateinit var detailId: String
+    var isLike: Boolean = false
 
+    override fun initInjector() {
+        DaggerDetailComponent.builder()
+                .detailPresenterModule(DetailPresenterModule(this))
+                .readerRepositoryComponent((this.application as QingReaderApplication).readerRepositoryComponent)
+                .build()
+                .inject(this)
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -54,12 +66,36 @@ class DetailActivity : BaseActivity(){
         }
         result = intent.extras.getSerializable(INTENT_DETATL_RESULT) as? GankIoDataBean.ResultBean
         webUrl = result?.url!!
+        detailId = result?._id!!
         toolbar.inflateMenu(R.menu.menu_detail)
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
         toolbar.setNavigationOnClickListener {
             finish()
         }
+        initListener()
         initWebView()
+        mPresenter.queryIsLIke(detailId)
+    }
+
+    fun initListener(){
+        toolbar.setOnMenuItemClickListener(object: Toolbar.OnMenuItemClickListener {
+            override fun onMenuItemClick(item: MenuItem?): Boolean {
+                when(item?.itemId){
+                    R.id.item_like -> {
+                        if(isLike){
+                            mPresenter.cancel(detailId)
+                        } else {
+                            val resultBean: ResultBean = ResultBean()
+                            resultBean._id = resultBean._id
+                            resultBean.createdAt = resultBean.createdAt
+                          //  mPresenter.add(result)
+                        }
+                    }
+                }
+                return false
+            }
+
+        })
     }
 
     fun initWebView(){
@@ -98,12 +134,29 @@ class DetailActivity : BaseActivity(){
             }
         })
 
-        wvDetail?.addJavascriptInterface(this, "App")
-        wvDetail?.loadUrl(webUrl)
+        wvDetail.loadUrl(webUrl)
     }
 
     override fun initData() {
+       // mPresenter.queryIsLIke()
+    }
 
+    override fun showLike() {
+        toolbar.menu.getItem(0).setIcon(R.drawable.ic_star_black_24dp_red)
+        isLike = true
+    }
+
+    override fun showUnLike() {
+        toolbar.menu.getItem(0).setIcon(R.drawable.ic_star_black_24dp)
+        isLike = false
+    }
+
+    override fun showError() {
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_detail, menu)
+        return true
     }
 
     override fun onDestroy() {
@@ -113,7 +166,7 @@ class DetailActivity : BaseActivity(){
 
             (wvDetail?.parent as ViewGroup).removeView(wvDetail)
             wvDetail?.destroy()
-            wvDetail = null
+            //wvDetail = null
         }
         super.onDestroy()
     }

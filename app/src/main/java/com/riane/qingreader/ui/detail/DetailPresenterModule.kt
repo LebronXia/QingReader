@@ -7,7 +7,7 @@ import dagger.Provides
  * Created by xiaobozheng on 10/11/2017.
  */
 @Module
-class DetailPresenterModule constructor(view: DetailContract.View){
+class DetailPresenterModule constructor(val view: DetailContract.View){
     var mView: DetailContract.View = view
 
     @Provides
