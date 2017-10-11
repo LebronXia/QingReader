@@ -1,6 +1,5 @@
 package com.riane.qingreader.ui.base;
 
-import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
@@ -9,7 +8,7 @@ import io.reactivex.disposables.Disposable;
  * Created by Riane on 2017/7/5.
  */
 
-public class BasePresenter<T extends BaseContract.BaseView> implements BaseContract.BasePresenter<T>{
+public class BasePresenter implements BaseContract.BasePresenter{
 
     protected CompositeDisposable mCompositeDisposable;
 

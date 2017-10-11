@@ -1,5 +1,11 @@
 package com.riane.qingreader.data.network.reponse;
 
+import com.google.gson.annotations.SerializedName;
+
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Transient;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -23,17 +29,30 @@ public class GankIoDataBean implements Serializable{
 
     private List<ResultBean> results;
 
+    @Entity
     public static class ResultBean implements Serializable {
-
+        @Id
         private String _id;
+        @SerializedName("creatAt")
         private String createdAt;
+        @SerializedName("desc")
         private String desc;
+        @SerializedName("publishedAt")
         private String publishedAt;
+        @SerializedName("source")
         private String source;
+        @SerializedName("type")
         private String type;
+        @SerializedName("url")
         private String url;
+        @SerializedName("used")
         private boolean used;
+        @SerializedName("who")
         private String who;
+
+        //@Transient  表示不存在数据库
+        @SerializedName("images")
+        @Transient
         private List<String> images;
 
         public String get_id() {

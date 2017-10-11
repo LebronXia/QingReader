@@ -6,6 +6,7 @@ import com.riane.qingreader.data.network.reponse.GankIoDataBean;
 import com.riane.qingreader.data.network.reponse.GankIoDayBean;
 import com.riane.qingreader.data.network.reponse.HotMovieBean;
 import com.riane.qingreader.data.network.reponse.MovieDetailBean;
+import com.riane.qingreader.data.network.reponse.ResultBean;
 import com.riane.qingreader.data.network.reponse.ThemeResponse;
 
 import java.util.List;
@@ -74,5 +75,27 @@ public class ReaderRepository implements ReaderDataSource{
     @Override
     public Observable<MovieDetailBean> getMovieDetail(String id) {
         return mReaderRemoteDataSource.getMovieDetail(id);
+    }
+
+    //查询是否在数据库汇总存在
+    @Override
+    public Boolean getIsCollection(String id) {
+        return mReaderLocalDataSource.getIsCollection(id);
+    }
+
+    @Override
+    public void addConnection(ResultBean resultBean) {
+        mReaderLocalDataSource.addConnection(resultBean);
+    }
+
+    @Override
+    public void cancelCollection(String id) {
+        mReaderLocalDataSource.cancelCollection(id);
+    }
+
+    //查询出全部数据库文章数据
+    @Override
+    public Observable<List<ResultBean>> queryForList(int offset) {
+        return mReaderLocalDataSource.queryForList(offset);
     }
 }

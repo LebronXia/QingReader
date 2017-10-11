@@ -6,8 +6,8 @@ import android.net.ConnectivityManager
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.support.v7.widget.Toolbar
+import android.view.ViewGroup
 import android.webkit.*
-import android.widget.ScrollView
 import butterknife.BindView
 import com.riane.qingreader.R
 import com.riane.qingreader.data.network.reponse.GankIoDataBean
@@ -26,14 +26,15 @@ class DetailActivity : BaseActivity(){
 
     @BindView(R.id.common_toolbar)
     lateinit var toolbar : Toolbar
-    @BindView(R.id.scrollview)
-    lateinit var svDetail : ScrollView
+//  @BindView(R.id.scrollview)
+//  lateinit var svDetail : ScrollView
     @BindView(R.id.wv_detail)
-    lateinit var wvDetail: WebView
+    var wvDetail: WebView? = null
     lateinit var webUrl: String
 
-
     var result: GankIoDataBean.ResultBean? = null
+    //@Inject lateinit var mPresenter: DetailPresenter
+
     override fun getLayoutId(): Int {
         return R.layout.activity_detail
     }
@@ -51,11 +52,9 @@ class DetailActivity : BaseActivity(){
             actionBar.setDisplayShowTitleEnabled(false)
             actionBar.setDisplayHomeAsUpEnabled(true)
         }
-        toolbar.title = "aaaa"
-
         result = intent.extras.getSerializable(INTENT_DETATL_RESULT) as? GankIoDataBean.ResultBean
         webUrl = result?.url!!
-
+        toolbar.inflateMenu(R.menu.menu_detail)
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
         toolbar.setNavigationOnClickListener {
             finish()
@@ -64,26 +63,25 @@ class DetailActivity : BaseActivity(){
     }
 
     fun initWebView(){
-
-        val webSettings = wvDetail.settings
+        val webSettings = wvDetail?.settings
         //webSettings.setUseWideViewPort(true)
-        webSettings.useWideViewPort = true
+        webSettings?.useWideViewPort = true
         //设置能够解析Javascript
-        webSettings.javaScriptEnabled = true
-        webSettings.loadWithOverviewMode = true
-        webSettings.builtInZoomControls = true
-        webSettings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
+        webSettings?.javaScriptEnabled = true
+        webSettings?.loadWithOverviewMode = true
+        webSettings?.builtInZoomControls = true
+        webSettings?.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
         //设置适应Html5的一些方法
-        webSettings.domStorageEnabled = true
+        webSettings?.domStorageEnabled = true
         val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkInfo = connectivityManager.activeNetworkInfo
         if (networkInfo != null && networkInfo.isAvailable) {
-            webSettings.cacheMode = WebSettings.LOAD_DEFAULT//网络正常时使用默认缓存策略
+            webSettings?.cacheMode = WebSettings.LOAD_DEFAULT//网络正常时使用默认缓存策略
         } else {
-            webSettings.cacheMode = WebSettings.LOAD_CACHE_ONLY//网络不可用时只使用缓存
+            webSettings?.cacheMode = WebSettings.LOAD_CACHE_ONLY//网络不可用时只使用缓存
         }
-        wvDetail.setWebChromeClient(WebChromeClient())
-        wvDetail.setWebViewClient(object : WebViewClient(){
+        wvDetail?.setWebChromeClient(WebChromeClient())
+        wvDetail?.setWebViewClient(object : WebViewClient(){
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
                 view?.loadUrl(webUrl)
                 return true
@@ -91,18 +89,32 @@ class DetailActivity : BaseActivity(){
             //设置加载前函数
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
+                toolbar.title = "加载中"
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
+                toolbar.title = result?.desc
             }
         })
 
-        wvDetail.addJavascriptInterface(this, "App")
-        wvDetail.loadUrl("https://www.baidu.com/")
+        wvDetail?.addJavascriptInterface(this, "App")
+        wvDetail?.loadUrl(webUrl)
     }
 
     override fun initData() {
 
+    }
+
+    override fun onDestroy() {
+        if (wvDetail != null){
+            wvDetail?.loadDataWithBaseURL(null, "", "text/html", "utf-8", null)
+            wvDetail?.clearHistory()
+
+            (wvDetail?.parent as ViewGroup).removeView(wvDetail)
+            wvDetail?.destroy()
+            wvDetail = null
+        }
+        super.onDestroy()
     }
 }
