@@ -42,6 +42,9 @@ android {
             }
         }
     }
+    kapt {
+            generateStubs = true
+         }
 }
 
 dependencies {
@@ -67,6 +70,7 @@ dependencies {
     //Annotation
     compile 'com.jakewharton:butterknife:8.6.0'
     apt 'com.jakewharton:butterknife-compiler:8.6.0'
+    kapt 'com.google.dagger:dagger-compiler:2.5'
     compile 'com.google.dagger:dagger:2.5'
     provided 'com.google.dagger:dagger-compiler:2.5'
     provided 'org.glassfish:javax.annotation:10.0-b28'

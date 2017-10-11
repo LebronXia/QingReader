@@ -3,7 +3,6 @@ package com.riane.qingreader.data.network.reponse;
 /**
  * Created by xiaobozheng on 8/11/2017.
  */
-
 public class Result {
     private String desc ;
     private String ganhuo_id;
@@ -12,6 +11,20 @@ public class Result {
     private String type;
     private String url;
     private String who;
+
+    public Result(String desc, String ganhuo_id, String publishedAt,
+            String readability, String type, String url, String who) {
+        this.desc = desc;
+        this.ganhuo_id = ganhuo_id;
+        this.publishedAt = publishedAt;
+        this.readability = readability;
+        this.type = type;
+        this.url = url;
+        this.who = who;
+    }
+
+    public Result() {
+    }
 
     public String getDesc() {
         return desc;

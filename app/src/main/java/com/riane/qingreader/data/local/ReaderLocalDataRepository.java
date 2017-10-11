@@ -5,6 +5,7 @@ import android.database.Cursor;
 import com.riane.qingreader.data.local.gen.DaoMaster;
 import com.riane.qingreader.data.local.gen.DaoSession;
 import com.riane.qingreader.data.local.gen.SearchHistoryDao;
+import com.riane.qingreader.data.network.reponse.ResultBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,8 @@ import java.util.concurrent.Callable;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+
+import static com.riane.qingreader.Contants.PAGECOUNT;
 
 /**
  * Created by Riane on 2017/7/30.
@@ -62,5 +65,35 @@ public class ReaderLocalDataRepository implements DbHelper{
     public void deleteSearchHistory() {
         //删除数据库
         mDaoSession.getSearchHistoryDao().deleteAll();
+    }
+
+    @Override
+    public Boolean getIsCollection(String id) {
+
+        return mDaoSession.getResultBeanDao().load(id) != null;
+    }
+
+    @Override
+    public void addConnection(ResultBean resultBean) {
+        mDaoSession.getResultBeanDao().insert(resultBean);
+    }
+
+    @Override
+    public void cancelCollection(String id) {
+        mDaoSession.getResultBeanDao().deleteByKey(id);
+    }
+
+    @Override
+    public Observable<List<ResultBean>> queryForList(final int offset) {
+        return Observable.fromCallable(
+                new Callable<List<ResultBean>>() {
+                    @Override
+                    public List<ResultBean> call() throws Exception {
+                        return mDaoSession.getResultBeanDao().queryBuilder().
+                                offset((offset -1)*PAGECOUNT).limit(PAGECOUNT)
+                                .build().list();
+                    }
+                }
+        );
     }
 }
