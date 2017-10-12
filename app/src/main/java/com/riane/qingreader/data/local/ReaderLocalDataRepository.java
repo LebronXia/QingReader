@@ -83,6 +83,7 @@ public class ReaderLocalDataRepository implements DbHelper{
         mDaoSession.getResultBeanDao().deleteByKey(id);
     }
 
+    //查询技术文章的存储
     @Override
     public Observable<List<ResultBean>> queryForList(final int offset) {
         return Observable.fromCallable(

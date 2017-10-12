@@ -18,6 +18,7 @@ import com.riane.qingreader.R;
 import com.riane.qingreader.ui.adapter.MyFragmentPagerAdapter;
 import com.riane.qingreader.ui.base.BaseActivity;
 import com.riane.qingreader.ui.book.BookFragment;
+import com.riane.qingreader.ui.collection.MyCollectionActivity;
 import com.riane.qingreader.ui.gank.GankFragment;
 import com.riane.qingreader.ui.movie.MovieFragment;
 import com.riane.qingreader.ui.search.SearchActivity;
@@ -84,7 +85,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
                         break;
                     case R.id.nav_my_collect:
-
+                       startActivity(new Intent(MainActivity.this, MyCollectionActivity.class));
                         break;
                     case R.id.nav_day_night:
                         RxBus.getInstance().post(true);

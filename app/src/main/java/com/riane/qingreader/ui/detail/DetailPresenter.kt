@@ -11,9 +11,6 @@ import javax.inject.Inject
 class DetailPresenter @Inject constructor( val readerRepository: ReaderRepository
     , val detailView: DetailContract.View): BasePresenter(), DetailContract.Presenter{
 
-    override fun detachView() {
-    }
-
     override fun queryIsLIke(id: String) {
         if (readerRepository.getIsCollection(id)){
             detailView.showLike()

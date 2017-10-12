@@ -5,11 +5,14 @@ import android.graphics.Bitmap
 import android.net.ConnectivityManager
 import android.os.Build
 import android.support.annotation.RequiresApi
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
+import android.widget.ProgressBar
 import butterknife.BindView
 import com.riane.qingreader.QingReaderApplication
 import com.riane.qingreader.R
@@ -35,6 +38,8 @@ class DetailActivity : BaseActivity(),DetailContract.View{
 //  lateinit var svDetail : ScrollView
     @BindView(R.id.wv_detail)
     lateinit var wvDetail: WebView
+    @BindView(R.id.pb_detail)
+    lateinit  var pbDetail: ProgressBar
     lateinit var webUrl: String
 
     var result: GankIoDataBean.ResultBean? = null
@@ -72,9 +77,10 @@ class DetailActivity : BaseActivity(),DetailContract.View{
         toolbar.setNavigationOnClickListener {
             finish()
         }
+        pbDetail.visibility = View.VISIBLE
         initListener()
         initWebView()
-        mPresenter.queryIsLIke(detailId)
+       // mPresenter.queryIsLIke(detailId)
     }
 
     fun initListener(){
@@ -84,11 +90,21 @@ class DetailActivity : BaseActivity(),DetailContract.View{
                     R.id.item_like -> {
                         if(isLike){
                             mPresenter.cancel(detailId)
+                            Snackbar.make(toolbar, "已取消收藏", Snackbar.LENGTH_SHORT).show()
+
                         } else {
                             val resultBean: ResultBean = ResultBean()
-                            resultBean._id = resultBean._id
-                            resultBean.createdAt = resultBean.createdAt
-                          //  mPresenter.add(result)
+                            resultBean._id = result?._id
+                            resultBean.createdAt = result?.createdAt
+                            resultBean.desc = result?.desc
+                            resultBean.publishedAt = result?.publishedAt
+                            resultBean.source = result?.source
+                            resultBean.type = result?.type
+                            resultBean.url = result?.url
+                            resultBean.used = result!!.isUsed
+                            resultBean.who = result?.who
+                            mPresenter.add(resultBean)
+                            Snackbar.make(toolbar, "已收藏", Snackbar.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -119,6 +135,7 @@ class DetailActivity : BaseActivity(),DetailContract.View{
         wvDetail?.setWebChromeClient(WebChromeClient())
         wvDetail?.setWebViewClient(object : WebViewClient(){
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+                pbDetail.visibility = View.VISIBLE
                 view?.loadUrl(webUrl)
                 return true
             }
@@ -130,6 +147,7 @@ class DetailActivity : BaseActivity(),DetailContract.View{
 
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
+                pbDetail.visibility = View.GONE
                 toolbar.title = result?.desc
             }
         })
@@ -138,7 +156,7 @@ class DetailActivity : BaseActivity(),DetailContract.View{
     }
 
     override fun initData() {
-       // mPresenter.queryIsLIke()
+        mPresenter.queryIsLIke(detailId)
     }
 
     override fun showLike() {
