@@ -68,6 +68,12 @@ public class HotMovieFragment extends BaseFragment implements MovieContract.View
         });
     }
 
+
+    @Override
+    protected void refreshUI() {
+
+    }
+
     @Override
     protected void initDatas() {
         isViewInitiated = true;

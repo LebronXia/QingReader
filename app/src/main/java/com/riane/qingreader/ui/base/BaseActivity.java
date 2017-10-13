@@ -33,7 +33,7 @@ public abstract class BaseActivity extends AppCompatActivity{
         ButterKnife.bind(this);
         mToolbar = ButterKnife.findById(this, R.id.toolbar_common);
         //mToolbar.setTitle("");
-        setTheme(R.style.NightTheme);
+       // setTheme(R.style.NightTheme);
         setSupportActionBar(mToolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -53,7 +53,7 @@ public abstract class BaseActivity extends AppCompatActivity{
         } else {
             setTheme(R.style.NightTheme);
         }
-    };
+    }
 
     protected abstract int getLayoutId();
 

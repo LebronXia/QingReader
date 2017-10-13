@@ -66,6 +66,11 @@ public class Top250Fragment extends BaseFragment implements MovieContract.View, 
         });
     }
 
+    @Override
+    protected void refreshUI() {
+
+    }
+
     private void loadTop250MovieData() {
         moviePresenter.getTop250Movie(start, count);
     }

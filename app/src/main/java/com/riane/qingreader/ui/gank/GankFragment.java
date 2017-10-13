@@ -44,6 +44,11 @@ public class GankFragment extends BaseFragment{
     protected void initView() {
     }
 
+    @Override
+    protected void refreshUI() {
+
+    }
+
     private void initFragmentList() {
         mTitleList.add("每日推荐");
         mTitleList.add("福利");
@@ -63,7 +68,7 @@ public class GankFragment extends BaseFragment{
         MyFragmentPagerAdapter myAdapter = new MyFragmentPagerAdapter(getChildFragmentManager(), mFragments, mTitleList);
         mVpGank.setAdapter(myAdapter);
         //左右预加载3个页面
-        mVpGank.setOffscreenPageLimit(3);
+        mVpGank.setOffscreenPageLimit(4);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
         mTabLayout.setupWithViewPager(mVpGank);
         stateLayout.showSuccessView();

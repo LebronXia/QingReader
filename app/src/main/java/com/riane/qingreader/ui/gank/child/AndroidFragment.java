@@ -3,7 +3,11 @@ package com.riane.qingreader.ui.gank.child;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.util.TypedValue;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.riane.qingreader.Contants;
@@ -16,14 +20,11 @@ import com.riane.qingreader.ui.gank.child.custom.CustomGankContract;
 import com.riane.qingreader.ui.gank.child.custom.CustomGankPresenter;
 import com.riane.qingreader.ui.gank.child.custom.CustomGankPresenterModule;
 import com.riane.qingreader.ui.gank.child.custom.DaggerCustomGankComponent;
-import com.riane.qingreader.util.RxBus;
 import com.riane.qingreader.view.StateLayout;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import io.reactivex.Flowable;
-import io.reactivex.functions.Consumer;
 
 /**
  * Created by Riane on 2017/7/12.
@@ -33,7 +34,7 @@ public class AndroidFragment extends BaseFragment implements CustomGankContract.
 
     @BindView(R.id.xrv_android)
     XRecyclerView mAndroidXRecycleView;
-    private Flowable<Boolean> observable;
+    //private Flowable<Boolean> observable;
     private AndoridAdapter mAndoridAdapter;
     private int mPage = 1;
 
@@ -56,26 +57,30 @@ public class AndroidFragment extends BaseFragment implements CustomGankContract.
 
     @Override
     protected void initView() {
-
-
+        stateLayout.showLoadingView();
+        isViewInitiated = true;
+        mAndoridAdapter = new AndoridAdapter(getActivity());
+        mAndroidXRecycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mAndroidXRecycleView.setAdapter(mAndoridAdapter);
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        observable = RxBus.getInstance().register(Boolean.class);
-        observable.subscribe(new Consumer<Boolean>() {
-            @Override
-            public void accept(Boolean aBoolean) throws Exception {
-                refreshUI();
-            }
-        });
+//        observable = RxBus.getInstance().register(Boolean.class);
+//        observable.subscribe(new Consumer<Boolean>() {
+//            @Override
+//            public void accept(Boolean aBoolean) throws Exception {
+//                refreshUI();
+//            }
+//        });
     }
 
-    private void refreshUI() {
-        TypedValue backgroundcolor_item = new TypedValue();
-        TypedValue textColor = new TypedValue();
-        TypedValue backgroundcolor = new TypedValue();
+    @Override
+    protected void refreshUI() {
+        TypedValue backgroundcolor_item = new TypedValue(); //item的背景颜色
+        TypedValue textColor = new TypedValue();  //字体颜色
+        TypedValue backgroundcolor = new TypedValue();   //背景颜色
 
         Resources.Theme theme = getActivity().getTheme();
         theme.resolveAttribute(R.attr.backgroundcolor_item, backgroundcolor_item, true);
@@ -85,8 +90,11 @@ public class AndroidFragment extends BaseFragment implements CustomGankContract.
 
         int childCount = mAndroidXRecycleView.getChildCount();
         for (int childIndex = 1; childIndex < childCount; childIndex ++){
-//            ViewGroup childView = (ViewGroup) mAndroidXRecycleView.getChildAt(childIndex);
-//            LinearLayout ll = (LinearLayout) childView.findViewById(R.id.ll_android_top);
+            ViewGroup childView = (ViewGroup) mAndroidXRecycleView.getChildAt(childIndex);
+            childView.setBackgroundResource(backgroundcolor_item.resourceId);
+            LinearLayout ll = (LinearLayout) childView.findViewById(R.id.ll_android_top);
+            Log.d("TAG", "腻害");
+            ll.setVisibility(View.GONE);
 //            ll.setBackgroundResource(backgroundcolor_item.resourceId);
 //            TextView title = (TextView) childView.findViewById(R.id.tv_android_des);
 //            title.setTextColor(resources.getColor(textColor.resourceId));
@@ -96,11 +104,6 @@ public class AndroidFragment extends BaseFragment implements CustomGankContract.
 
     @Override
     protected void initDatas() {
-        stateLayout.showLoadingView();
-        isViewInitiated = true;
-        mAndoridAdapter = new AndoridAdapter(getActivity());
-        mAndroidXRecycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mAndroidXRecycleView.setAdapter(mAndoridAdapter);
         mAndroidXRecycleView.setLoadingListener(new XRecyclerView.LoadingListener(){
             @Override
             public void onRefresh() {
@@ -171,6 +174,6 @@ public class AndroidFragment extends BaseFragment implements CustomGankContract.
     @Override
     public void onDetach() {
         super.onDetach();
-        RxBus.getInstance().unregisterAll();
+       // RxBus.getInstance().unregisterAll();
     }
 }

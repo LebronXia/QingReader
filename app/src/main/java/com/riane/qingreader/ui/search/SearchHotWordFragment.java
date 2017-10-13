@@ -57,6 +57,11 @@ public class SearchHotWordFragment extends BaseFragment implements SearchContrac
         initFleboxType();
     }
 
+    @Override
+    protected void refreshUI() {
+
+    }
+
     private void initFleboxType() {
         mFblSearchType.setFlexWrap(FlexWrap.WRAP);
         for (BaseEnum nameEnum : BaseEnum.values()){

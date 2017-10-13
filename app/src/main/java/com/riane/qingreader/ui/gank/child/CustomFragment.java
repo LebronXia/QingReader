@@ -76,6 +76,11 @@ public class CustomFragment extends BaseFragment implements CustomGankContract.V
     }
 
     @Override
+    protected void refreshUI() {
+
+    }
+
+    @Override
     protected void initDatas() {
         stateLayout.showLoadingView();
         isViewInitiated = true;

@@ -55,6 +55,11 @@ public class MovieFragment extends BaseFragment{
         stateLayout.showSuccessView();
     }
 
+    @Override
+    protected void refreshUI() {
+
+    }
+
     private void initFragmentList() {
         mTitleList.add("热映榜");
         mTitleList.add("Top250");

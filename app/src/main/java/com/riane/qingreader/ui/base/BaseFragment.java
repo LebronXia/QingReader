@@ -9,9 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.riane.qingreader.util.RxBus;
 import com.riane.qingreader.view.StateLayout;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
+import io.reactivex.Flowable;
+import io.reactivex.functions.Consumer;
 
 /**
  * Created by Riane on 2017/7/4.
@@ -26,7 +30,9 @@ public abstract class BaseFragment extends Fragment{
     protected View parentView;
     private LinearLayout mLlRootLayout;
     //protected LayoutInflater mInflater;
+    private Flowable<Boolean> observable;
     protected StateLayout stateLayout;
+    private Unbinder unbinder;
 
     public abstract int getLayoutResId();
 
@@ -35,6 +41,7 @@ public abstract class BaseFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mLlRootLayout = new LinearLayout(getActivity());
         parentView = inflater.inflate(getLayoutResId(), container, false);
+        unbinder = ButterKnife.bind(this, parentView);
         stateLayout = new StateLayout(getActivity());
         mLlRootLayout.addView(stateLayout);
         stateLayout.bindSuccessView(parentView);
@@ -44,8 +51,6 @@ public abstract class BaseFragment extends Fragment{
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        ButterKnife.bind(this, view);
         initInjector();
         initView();
     }
@@ -56,10 +61,21 @@ public abstract class BaseFragment extends Fragment{
 
     protected abstract void initDatas();
 
+    protected abstract void refreshUI();
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         this.mContext = context;
+        if (context instanceof BaseActivity){
+            observable = RxBus.getInstance().register(Boolean.class);
+            observable.subscribe(new Consumer<Boolean>() {
+                @Override
+                public void accept(Boolean aBoolean) throws Exception {
+                    refreshUI();
+                }
+            });
+        }
     }
 
     /**
@@ -104,4 +120,17 @@ public abstract class BaseFragment extends Fragment{
 //     * 加载事变后点击后的操作
 //     */
 //    protected void onRefresh(){};
+
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        RxBus.getInstance().unregisterAll();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 }

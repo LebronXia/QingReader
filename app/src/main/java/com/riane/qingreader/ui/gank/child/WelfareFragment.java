@@ -60,6 +60,11 @@ public class WelfareFragment extends BaseFragment implements CustomGankContract.
     }
 
     @Override
+    protected void refreshUI() {
+
+    }
+
+    @Override
     protected void initDatas() {
         stateLayout.showLoadingView();
         isViewInitiated = true;
@@ -97,6 +102,7 @@ public class WelfareFragment extends BaseFragment implements CustomGankContract.
 
     private void loadWelfareData() {
         mCustomGankPresenter.getGankCustomData("福利" , mPage, Contants.per_page);
+        isDataInitiated = false;
     }
 
     @Override

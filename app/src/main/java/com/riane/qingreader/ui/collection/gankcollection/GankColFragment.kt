@@ -39,6 +39,10 @@ class GankColFragment: BaseFragment(), GankColContract.View{
 
     }
 
+    override fun refreshUI() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun loadData() {
         if (!isDataInitiated || !isViewInitiated || !mIsVisible) {
             return
@@ -58,15 +62,16 @@ class GankColFragment: BaseFragment(), GankColContract.View{
         xrvGankCollection.layoutManager = LinearLayoutManager(activity)
         xrvGankCollection.setLoadingListener( object : XRecyclerView.LoadingListener{
             override fun onLoadMore() {
-                offset =1
+                offset ++
                 loadGankCollectionData()
             }
 
             override fun onRefresh() {
-                offset ++
+                offset = 1
                 loadGankCollectionData()
             }
         })
+        loadGankCollectionData()
     }
 
     fun setAdapter( results: MutableList<ResultBean>) {

@@ -31,6 +31,11 @@ public class BookFragment extends BaseFragment{
     }
 
     @Override
+    protected void refreshUI() {
+
+    }
+
+    @Override
     protected void initDatas() {
 
     }

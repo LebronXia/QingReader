@@ -61,6 +61,11 @@ public class SearchResultFragment extends BaseFragment implements SearchContract
     }
 
     @Override
+    protected void refreshUI() {
+
+    }
+
+    @Override
     protected void initDatas() {
         content = getArguments().getString("content");
         type = getArguments().getString("type");

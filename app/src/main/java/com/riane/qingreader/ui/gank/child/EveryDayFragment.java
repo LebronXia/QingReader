@@ -68,6 +68,11 @@ public class EveryDayFragment extends BaseFragment implements EveryDayGankContra
     }
 
     @Override
+    protected void refreshUI() {
+
+    }
+
+    @Override
     protected void initDatas() {
         stateLayout.showLoadingView();
         isViewInitiated = true;
