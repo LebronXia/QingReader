@@ -66,7 +66,7 @@
         <item name="colorPrimaryDark">@color/color252525</item>
 
         <item name="tablayoutbgcolor">@color/tablayoutbgcolor</item>
-        <item name="backgroundcolor">@color/night_item_background</item>
+        <item name="backgroundcolor">@color/night_background</item>
         <item name="textcolor">@color/night_item_textcolor</item>
         <item name="backgroundcolor_item">@color/night_item_background</item>
         <item name="toolbarColor">@color/black</item>

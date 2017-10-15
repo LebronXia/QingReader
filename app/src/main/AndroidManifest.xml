@@ -15,7 +15,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/DayTheme">
         <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,7 +27,6 @@
         <activity android:name=".ui.movie.MovieDetail.MovieDetailActivity" />
         <activity android:name=".ui.detail.DetailActivity" />
         <activity android:name=".ui.collection.MyCollectionActivity"></activity>
-        <activity android:name=".ui.collection.MyCollectionActivity"/>
     </application>
 
 </manifest>

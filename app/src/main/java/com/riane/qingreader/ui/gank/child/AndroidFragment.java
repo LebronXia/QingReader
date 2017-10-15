@@ -8,6 +8,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.riane.qingreader.Contants;
@@ -87,19 +88,19 @@ public class AndroidFragment extends BaseFragment implements CustomGankContract.
         theme.resolveAttribute(R.attr.textcolor, textColor, true);
         theme.resolveAttribute(R.attr.backgroundcolor, backgroundcolor, true);
         Resources resources = getResources();
-
+        mAndroidXRecycleView.setBackgroundResource(backgroundcolor_item.resourceId);
         int childCount = mAndroidXRecycleView.getChildCount();
-        for (int childIndex = 1; childIndex < childCount; childIndex ++){
-            ViewGroup childView = (ViewGroup) mAndroidXRecycleView.getChildAt(childIndex);
-            childView.setBackgroundResource(backgroundcolor_item.resourceId);
-            LinearLayout ll = (LinearLayout) childView.findViewById(R.id.ll_android_top);
-            Log.d("TAG", "腻害");
-            ll.setVisibility(View.GONE);
-//            ll.setBackgroundResource(backgroundcolor_item.resourceId);
-//            TextView title = (TextView) childView.findViewById(R.id.tv_android_des);
-//            title.setTextColor(resources.getColor(textColor.resourceId));
-        }
+        if (childCount != 2){
+            for (int childIndex = 1; childIndex < childCount; childIndex ++){
+                ViewGroup childView = (ViewGroup) mAndroidXRecycleView.getChildAt(childIndex);
+               // childView.setBackgroundResource(backgroundcolor_item.resourceId);
+                LinearLayout ll = (LinearLayout) childView.findViewById(R.id.ll_android_top);
+                ll.setBackgroundResource(backgroundcolor_item.resourceId);
+                TextView title = (TextView) childView.findViewById(R.id.tv_android_des);
+                title.setTextColor(resources.getColor(textColor.resourceId));
+            }
 
+        }
     }
 
     @Override

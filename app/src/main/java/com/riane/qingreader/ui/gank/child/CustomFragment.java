@@ -1,8 +1,13 @@
 package com.riane.qingreader.ui.gank.child;
 
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cocosw.bottomsheet.BottomSheet;
@@ -77,6 +82,40 @@ public class CustomFragment extends BaseFragment implements CustomGankContract.V
 
     @Override
     protected void refreshUI() {
+        TypedValue backgroundcolor_item = new TypedValue(); //item的背景颜色
+        TypedValue textColor = new TypedValue();  //字体颜色
+        TypedValue backgroundcolor = new TypedValue();   //背景颜色
+
+        Resources.Theme theme = getActivity().getTheme();
+        theme.resolveAttribute(R.attr.backgroundcolor_item, backgroundcolor_item, true);
+        theme.resolveAttribute(R.attr.textcolor, textColor, true);
+        theme.resolveAttribute(R.attr.backgroundcolor, backgroundcolor, true);
+        Resources resources = getResources();
+        mXRVGankCustom.setBackgroundResource(backgroundcolor_item.resourceId);
+
+
+        int childCount = mXRVGankCustom.getChildCount();
+        if (childCount > 2){
+            for (int childIndex = 2; childIndex < childCount; childIndex ++){
+                ViewGroup headView = (ViewGroup) mXRVGankCustom.getChildAt(1);
+                headView.setBackgroundResource(backgroundcolor_item.resourceId);
+                TextView headText = (TextView) headView.findViewById(R.id.tv_select_name);
+                headText.setTextColor(resources.getColor(textColor.resourceId));
+                LinearLayout llChooseCatalogue = (LinearLayout) headView.findViewById(R.id.ll_choose_catalogue);
+                llChooseCatalogue.setBackgroundResource(backgroundcolor.resourceId);
+                TextView tvChooseCatalogue = (TextView) llChooseCatalogue.findViewById(R.id.tv_choose_catalogue);
+                tvChooseCatalogue.setTextColor(resources.getColor(textColor.resourceId));
+
+                if (childIndex > 2){
+                    ViewGroup childView = (ViewGroup) mXRVGankCustom.getChildAt(childIndex);
+                    childView.setBackgroundResource(backgroundcolor_item.resourceId);
+                    TextView title = (TextView) childView.findViewById(R.id.tv_android_des);
+                    title.setTextColor(resources.getColor(textColor.resourceId));
+                }
+
+            }
+        }
+
 
     }
 

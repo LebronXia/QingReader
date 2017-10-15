@@ -16,6 +16,7 @@
         android:layout_height="match_parent"
         android:scrollbarFadeDuration="1"
         android:scrollbarSize="4dp"
+        android:background="?attr/backgroundcolor"
         />
 
 </LinearLayout>
