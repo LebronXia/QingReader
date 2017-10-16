@@ -1,6 +1,7 @@
 package com.riane.qingreader.ui.movie.HotMovie;
 
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 

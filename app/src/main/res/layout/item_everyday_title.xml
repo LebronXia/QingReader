@@ -5,8 +5,11 @@
               android:layout_height="wrap_content">
 
     <RelativeLayout
+        android:id="@+id/rl_everyday_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="?attr/backgroundcolor_item"
+        >
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -29,6 +32,7 @@
                 android:layout_marginLeft="2dp"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                android:textColor="?attr/textcolor"
                 android:text="Andorid"
                 />
         </LinearLayout>
@@ -44,8 +48,10 @@
             >
 
             <TextView
+                android:id="@+id/tv_everyday_more"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="?attr/textcolor"
                 android:text="更多"
                 android:textSize="12sp"
                 />

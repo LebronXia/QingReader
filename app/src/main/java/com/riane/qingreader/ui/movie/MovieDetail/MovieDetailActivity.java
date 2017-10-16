@@ -125,6 +125,11 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
 
     }
 
+    @Override
+    protected void refreshUI() {
+
+    }
+
     private void setTooltBar() {
         setSupportActionBar(mTbBaseTitle);
         ActionBar actionBar = getSupportActionBar();

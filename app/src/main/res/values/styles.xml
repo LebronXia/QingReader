@@ -52,11 +52,12 @@
         <item name="colorPrimaryDark">@color/colorTheme</item>
         <item name="colorAccent">@color/colorTheme</item>
 
-        <item name="tablayoutbgcolor">@color/gank_gray</item>
+        <item name="tablayoutbgcolor">@color/colorPageBg</item>
         <item name="backgroundcolor">@color/backgroundColor</item>
         <item name="textcolor">@color/black</item>
         <item name="backgroundcolor_item">@color/colorwhite</item>
         <item name="toolbarColor">@color/colorTheme</item>
+
 
     </style>
 
@@ -69,6 +70,6 @@
         <item name="backgroundcolor">@color/night_background</item>
         <item name="textcolor">@color/night_item_textcolor</item>
         <item name="backgroundcolor_item">@color/night_item_background</item>
-        <item name="toolbarColor">@color/black</item>
+        <item name="toolbarColor">@color/tablayoutbgcolor</item>
     </style>
 </resources>

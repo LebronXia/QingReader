@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/ll_three_photo"
-              android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:paddingLeft="10dp"
-              android:paddingRight="10dp"
-              android:paddingBottom="10dp"
     >
+
+    <LinearLayout
+        android:id="@+id/ll_three_photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="?attr/backgroundcolor_item"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        >
 
     <LinearLayout
         android:layout_width="0dp"
@@ -32,7 +38,7 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:text=""
-            android:textColor="@color/colorContent"
+            android:textColor="?attr/textcolor"
             android:textSize="12sp" />
 
     </LinearLayout>
@@ -40,7 +46,7 @@
     <View
         android:layout_width="7dp"
         android:layout_height="match_parent"
-        android:background="@color/colorPageBg" />
+        android:background="@android:color/transparent" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -65,7 +71,7 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:text=""
-            android:textColor="@color/colorContent"
+            android:textColor="?attr/textcolor"
             android:textSize="12sp" />
 
     </LinearLayout>
@@ -73,7 +79,7 @@
     <View
         android:layout_width="7dp"
         android:layout_height="match_parent"
-        android:background="@color/colorPageBg" />
+        android:background="@android:color/transparent" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -98,11 +104,11 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:text=""
-            android:textColor="@color/colorContent"
+            android:textColor="?attr/textcolor"
             android:textSize="12sp" />
 
     </LinearLayout>
 
-
+    </LinearLayout>
 
 </LinearLayout>

@@ -3,6 +3,7 @@ package com.riane.qingreader.ui.gank;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.TypedValue;
 
 import com.riane.qingreader.R;
 import com.riane.qingreader.ui.adapter.MyFragmentPagerAdapter;
@@ -46,7 +47,11 @@ public class GankFragment extends BaseFragment{
 
     @Override
     protected void refreshUI() {
+        TypedValue tablayoutcolor = new TypedValue();
 
+        getActivity().getTheme().resolveAttribute(R.attr.tablayoutbgcolor,
+                tablayoutcolor, true);
+        mTabLayout.setBackgroundColor(getResources().getColor(tablayoutcolor.resourceId));
     }
 
     private void initFragmentList() {

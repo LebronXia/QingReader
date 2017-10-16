@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/ll_one_photo"
-              android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:paddingLeft="10dp"
-              android:paddingRight="10dp"
-              android:paddingBottom="10dp"
+
     >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ll_one_photo"
+        android:orientation="vertical"
+        android:background="?attr/backgroundcolor_item"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        >
 
     <ImageView
         android:id="@+id/iv_one_photo"
@@ -24,8 +31,8 @@
         android:text="Andorid插件话思想实现话原理"
         android:layout_marginTop="2dp"
         android:maxLines="2"
-        android:textColor="@color/colorContent"
+        android:textColor="?attr/textcolor"
         android:textSize="12sp"
         />
-
+    </LinearLayout>
 </LinearLayout>

@@ -159,6 +159,10 @@ class DetailActivity : BaseActivity(),DetailContract.View{
         mPresenter.queryIsLIke(detailId)
     }
 
+    override fun refreshUI() {
+
+    }
+
     override fun showLike() {
         toolbar.menu.getItem(0).setIcon(R.drawable.ic_star_black_24dp_red)
         isLike = true

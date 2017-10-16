@@ -1,8 +1,14 @@
 package com.riane.qingreader.ui.gank.child;
 
+import android.content.res.Resources;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.riane.qingreader.QingReaderApplication;
@@ -15,6 +21,8 @@ import com.riane.qingreader.ui.gank.child.everyday.EveryDayGankContract;
 import com.riane.qingreader.ui.gank.child.everyday.EveryDayGankPresenter;
 import com.riane.qingreader.ui.gank.child.everyday.EveryDayGankPresenterModule;
 import com.riane.qingreader.view.StateLayout;
+
+import org.w3c.dom.Text;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -43,6 +51,7 @@ public class EveryDayFragment extends BaseFragment implements EveryDayGankContra
     private int mYear;
     private int mMonth;
     private int mDay;
+    private LinearLayoutManager mLinearLayoutManager;
 
     @Inject
     EveryDayGankPresenter mEveryDayGankPresenter;
@@ -69,6 +78,69 @@ public class EveryDayFragment extends BaseFragment implements EveryDayGankContra
 
     @Override
     protected void refreshUI() {
+        TypedValue backgroundcolor_item = new TypedValue(); //item的背景颜色
+        TypedValue textColor = new TypedValue();  //字体颜色
+        TypedValue backgroundcolor = new TypedValue();   //背景颜色
+
+        Resources.Theme theme = getActivity().getTheme();
+        theme.resolveAttribute(R.attr.backgroundcolor_item, backgroundcolor_item, true);
+        theme.resolveAttribute(R.attr.textcolor, textColor, true);
+        theme.resolveAttribute(R.attr.backgroundcolor, backgroundcolor, true);
+        Resources resources = getResources();
+
+        mxRvEveryday.setBackgroundColor(backgroundcolor.resourceId);
+        int childCount = mxRvEveryday.getChildCount();
+        //int childCount = 10;
+        if (childCount > 2){
+            //监听RecycleView在顶部
+            if (mLinearLayoutManager.findFirstCompletelyVisibleItemPosition() == 0){
+                ViewGroup headView = (ViewGroup) mxRvEveryday.getChildAt(1);
+                LinearLayout llHeadView = (LinearLayout) headView.findViewById(R.id.ll_headerView);
+                llHeadView.setBackgroundResource(backgroundcolor_item.resourceId);
+                TextView tvheadChild1 = (TextView) headView.findViewById(R.id.tv_headview_child_1);
+                tvheadChild1.setTextColor(resources.getColor(textColor.resourceId));
+                TextView tvheadChild2 = (TextView) headView.findViewById(R.id.tv_headview_child_2);
+                tvheadChild2.setTextColor(resources.getColor(textColor.resourceId));
+                TextView tvheadChild3 = (TextView) headView.findViewById(R.id.tv_headview_child_3);
+                tvheadChild3.setTextColor(resources.getColor(textColor.resourceId));
+            }
+
+            for (int childIndex = 2; childIndex < childCount; childIndex ++){
+                ViewGroup childView = (ViewGroup) mxRvEveryday.getChildAt(childIndex);
+                int itemType = mEveryDayAdapter.getItemViewType(childIndex - 2);
+                switch (itemType){
+                    case 0:
+                        RelativeLayout rlEveryDayTitle = (RelativeLayout) childView.findViewById(R.id.rl_everyday_title);
+                        rlEveryDayTitle.setBackgroundResource(backgroundcolor_item.resourceId);
+                        break;
+                    case 1:
+                        LinearLayout llEverydayOne = (LinearLayout) childView.findViewById(R.id.ll_one_photo);
+                        TextView tvEverydayOne = (TextView) childView.findViewById(R.id.tv_one_photo_title);
+                        llEverydayOne.setBackgroundResource(backgroundcolor_item.resourceId);
+                        tvEverydayOne.setTextColor(resources.getColor(textColor.resourceId));
+                        break;
+                    case 2:
+                        LinearLayout llEverydayTwo= (LinearLayout) childView.findViewById(R.id.ll_two_photo);
+                        TextView tvTwoPhotoOne = (TextView) childView.findViewById(R.id.tv_two_photo_one);
+                        TextView tvTwoPhotoTwo = (TextView) childView.findViewById(R.id.tv_two_photo_two);
+                        llEverydayTwo.setBackgroundResource(backgroundcolor_item.resourceId);
+                        tvTwoPhotoOne.setTextColor(resources.getColor(textColor.resourceId));
+                        tvTwoPhotoTwo.setTextColor(resources.getColor(textColor.resourceId));
+                        break;
+                    case 3:
+                        LinearLayout llEverydayThree= (LinearLayout) childView.findViewById(R.id.ll_three_photo);
+                        TextView tvThreePhotoOne = (TextView) childView.findViewById(R.id.tv_three_photo_one);
+                        TextView tvThreePhotoTwo = (TextView) childView.findViewById(R.id.tv_three_photo_two);
+                        TextView tvThreePhotoThree = (TextView) childView.findViewById(R.id.tv_three_photo_three);
+                        llEverydayThree.setBackgroundResource(backgroundcolor_item.resourceId);
+                        tvThreePhotoOne.setTextColor(resources.getColor(textColor.resourceId));
+                        tvThreePhotoTwo.setTextColor(resources.getColor(textColor.resourceId));
+                        tvThreePhotoThree.setTextColor(resources.getColor(textColor.resourceId));
+                        break;
+                }
+            }
+
+        }
 
     }
 
@@ -87,7 +159,8 @@ public class EveryDayFragment extends BaseFragment implements EveryDayGankContra
         }
 
         mEveryDayAdapter = new EveryDayAdapter();
-        mxRvEveryday.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mLinearLayoutManager= new LinearLayoutManager(getActivity());
+        mxRvEveryday.setLayoutManager(mLinearLayoutManager);
         mxRvEveryday.setAdapter(mEveryDayAdapter);
         mxRvEveryday.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override

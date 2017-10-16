@@ -1,6 +1,8 @@
 package com.riane.qingreader.ui.gank.child;
 
+import android.content.res.Resources;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.TypedValue;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.riane.qingreader.Contants;
@@ -61,8 +63,15 @@ public class WelfareFragment extends BaseFragment implements CustomGankContract.
 
     @Override
     protected void refreshUI() {
+        TypedValue backgroundcolor_item = new TypedValue();   //背景颜色
+        Resources.Theme theme = getActivity().getTheme();
 
+        theme.resolveAttribute(R.attr.backgroundcolor_item, backgroundcolor_item, true);
+        //Resources resources = getResources();
+        mRvGankWelfare.setBackgroundResource(backgroundcolor_item.resourceId);
     }
+
+
 
     @Override
     protected void initDatas() {

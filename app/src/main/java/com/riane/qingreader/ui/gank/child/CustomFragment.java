@@ -96,23 +96,21 @@ public class CustomFragment extends BaseFragment implements CustomGankContract.V
 
         int childCount = mXRVGankCustom.getChildCount();
         if (childCount > 2){
+            ViewGroup headView = (ViewGroup) mXRVGankCustom.getChildAt(1);
+            headView.setBackgroundResource(backgroundcolor_item.resourceId);
+            TextView headText = (TextView) headView.findViewById(R.id.tv_select_name);
+            headText.setTextColor(resources.getColor(textColor.resourceId));
+            LinearLayout llChooseCatalogue = (LinearLayout) headView.findViewById(R.id.ll_choose_catalogue);
+            llChooseCatalogue.setBackgroundResource(backgroundcolor.resourceId);
+            TextView tvChooseCatalogue = (TextView) llChooseCatalogue.findViewById(R.id.tv_choose_catalogue);
+            tvChooseCatalogue.setTextColor(resources.getColor(textColor.resourceId));
             for (int childIndex = 2; childIndex < childCount; childIndex ++){
-                ViewGroup headView = (ViewGroup) mXRVGankCustom.getChildAt(1);
-                headView.setBackgroundResource(backgroundcolor_item.resourceId);
-                TextView headText = (TextView) headView.findViewById(R.id.tv_select_name);
-                headText.setTextColor(resources.getColor(textColor.resourceId));
-                LinearLayout llChooseCatalogue = (LinearLayout) headView.findViewById(R.id.ll_choose_catalogue);
-                llChooseCatalogue.setBackgroundResource(backgroundcolor.resourceId);
-                TextView tvChooseCatalogue = (TextView) llChooseCatalogue.findViewById(R.id.tv_choose_catalogue);
-                tvChooseCatalogue.setTextColor(resources.getColor(textColor.resourceId));
-
-                if (childIndex > 2){
                     ViewGroup childView = (ViewGroup) mXRVGankCustom.getChildAt(childIndex);
                     childView.setBackgroundResource(backgroundcolor_item.resourceId);
+                    LinearLayout ll = (LinearLayout) childView.findViewById(R.id.ll_android_top);
+                    ll.setBackgroundResource(backgroundcolor_item.resourceId);
                     TextView title = (TextView) childView.findViewById(R.id.tv_android_des);
                     title.setTextColor(resources.getColor(textColor.resourceId));
-                }
-
             }
         }
 

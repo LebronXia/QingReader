@@ -1,12 +1,16 @@
 package com.riane.qingreader.ui;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +38,8 @@ import static com.riane.qingreader.Contants.KEY_MODE_NIGHT;
 import static com.riane.qingreader.Contants.isDay;
 
 public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener, View.OnClickListener{
+    @BindView(R.id.toolbar_common)
+    Toolbar mToolbar;
     @BindView(R.id.vp_mian_content)
     ViewPager mVpMainContent;
     @BindView(R.id.drawer_layout)
@@ -46,6 +52,8 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     ImageView mIvMainMusic;
     @BindView(R.id.iv_main_friends)
     ImageView mIvMainFriends;
+    private LinearLayout mLlHeaderLayout;
+
     private TextView mTvDayorNight;
 
     private LinearLayout headerView;
@@ -63,14 +71,15 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     @Override
     protected void initViews() {
         initContentFragment();
-
         headerView = (LinearLayout) mNavigationView.getHeaderView(0);
         mTvDayorNight = (TextView) headerView.findViewById(R.id.tv_header_day_or_night);
         isDay = SPUtils.getBoolean(KEY_MODE_NIGHT, true);
         if (isDay){
             mTvDayorNight.setText("白天模式");
+            headerView.setBackgroundResource(R.mipmap.ic_nav_bg_drawerlayout);
         } else{
             mTvDayorNight.setText("夜晚模式");
+            headerView.setBackgroundResource(R.mipmap.ic_nav_bg_drawlayout_night);
         }
         initListener();
     }
@@ -113,6 +122,22 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     @Override
     protected void initData() {
 
+    }
+
+    @Override
+    protected void refreshUI() {
+        refreshToolbar(mToolbar);
+
+        TypedValue textColor = new TypedValue();  //字体颜色
+        TypedValue backgroundcolor = new TypedValue();   //背景颜色
+
+        Resources.Theme theme = getTheme();
+        theme.resolveAttribute(R.attr.textcolor, textColor, true);
+        theme.resolveAttribute(R.attr.backgroundcolor, backgroundcolor, true);
+        Resources resources = getResources();
+        mNavigationView.setBackgroundResource(backgroundcolor.resourceId);
+        mNavigationView.setItemBackgroundResource(backgroundcolor.resourceId);
+        mNavigationView.setItemTextColor(ColorStateList.valueOf(resources.getColor(textColor.resourceId)));
     }
 
     @OnClick({R.id.Fl_title_menu, R.id.iv_main_disco, R.id.iv_main_music, R.id.iv_main_friends})
@@ -199,10 +224,13 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                     isDay = false;
                     setTheme(R.style.NightTheme);
                     mTvDayorNight.setText("夜晚模式");
+                    headerView.setBackgroundResource(R.mipmap.ic_nav_bg_drawlayout_night);
+
                 } else {
                     isDay = true;
                     setTheme(R.style.DayTheme);
                     mTvDayorNight.setText("白天模式");
+                    headerView.setBackgroundResource(R.mipmap.ic_nav_bg_drawerlayout);
                 }
                 SPUtils.putBoolean(KEY_MODE_NIGHT, isDay);
                 RxBus.getInstance().post(isDay);

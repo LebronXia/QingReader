@@ -72,4 +72,8 @@ class MyCollectionActivity : BaseActivity() {
 
     override fun initData() {
     }
+
+    override fun refreshUI() {
+
+    }
 }

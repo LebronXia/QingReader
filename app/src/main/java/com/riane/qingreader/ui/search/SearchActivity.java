@@ -99,7 +99,10 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
                 searchContent(s.getSelectContent());
             }
         });
+    }
 
+    @Override
+    protected void refreshUI() {
 
     }
 
